@@ -10,7 +10,15 @@ class Board extends Component {
       let children = [];
       for (let j = 0; j < width; j++) {
         let card = cards[(i * height) + j]
-        children.push(<Card key={j} value={card.value} team={card.color} onCardClick={this.props.onCardClick} />);
+        children.push(
+          <Card 
+            key={j} 
+            value={card.value} 
+            team={card.color} 
+            onCardClick={this.props.onCardClick} 
+            isSpyMaster={this.props.isSpyMaster} 
+            winner={this.props.winner}
+          />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);
     }

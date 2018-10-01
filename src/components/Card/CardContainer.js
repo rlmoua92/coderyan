@@ -14,8 +14,10 @@ class CardContainer extends Component {
   }
 
   onClick(e) {
-    this.props.onCardClick(e, this.props.team);
-    this.setState({ isHidden: false });
+    if (this.state.isHidden && !this.props.winner && !this.props.isSpyMaster) {
+      this.props.onCardClick(e, this.props.team);
+      this.setState({ isHidden: false });
+    }
   }
 
   render() {
