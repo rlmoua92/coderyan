@@ -1,12 +1,3 @@
-import React, { Component }  from 'react';
-import ReactDOM from 'react-dom';
+import CardContainer from './CardContainer.js';
 
-class Card extends Component {
-	render() {
-		return (
-			<div>CARD</div>
-		);
-	}
-}
-
-export default Card;
+export default CardContainer;

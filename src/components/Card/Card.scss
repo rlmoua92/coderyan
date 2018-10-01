@@ -1,0 +1,33 @@
+.card {
+  display: inline-block;
+  padding: 10px 0;
+  width: calc(20% - .5em);
+  height: calc(20vh - .5em);
+  max-height: 140px;
+  text-align: center;
+  border: 1px solid #f4f4f4;
+  border-radius: .25em;
+  box-sizing: border-box;
+  margin: .25em;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+.card-hidden {
+  background-color: #fff;
+  color: #000;
+}
+.card-red {
+  background-color: red;
+  color: #fff;
+}
+.card-blue {
+  background-color: blue;
+  color: #fff;
+}
+.card-neutral {
+  background-color: grey;
+  color: #000;
+}
+.card-black {
+  background-color: #000;
+  color: #fff;
+}
