@@ -41,6 +41,10 @@ const Game = (props) => {
         onCardClick={props.onCardClick} 
         isSpyMaster={props.isSpyMaster}
         winner={props.winner}
+        redTotal={props.redTotal}
+        blueTotal={props.blueTotal}
+        height={props.height}
+        width={props.width}
       />
     </div>
   );

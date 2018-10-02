@@ -1,24 +1,29 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
+import { getRandomInt } from '../../common.js';
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
+
+    const firstPlayer = getRandomInt(0, 100) % 2;
 
     this.state = {
       score: {
         red: 0,
         blue: 0
       },
-      isPlayerRed: null,
+      isPlayerRed: firstPlayer,
       isSpyMaster: false,
       winner: null,
       useTimer: true,
       winConditions: {
-        red: null,
-        blue: null
-      }
+        red: firstPlayer ? 9 : 8,
+        blue: firstPlayer ? 8 : 9
+      },
+      height: 5,
+      width: 5,
     }
 
     this.onCardClick = this.onCardClick.bind(this);
@@ -27,16 +32,6 @@ class GameContainer extends Component {
     this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
     this.checkWin = this.checkWin.bind(this);
     this.handleTimerChange = this.handleTimerChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState({ 
-      isPlayerRed: true,
-      winConditions: {
-        red: 9,
-        blue: 8,
-      } 
-    });
   }
 
   componentDidUpdate() {
@@ -103,7 +98,17 @@ class GameContainer extends Component {
   }
 
   render() {
-    const { score, isPlayerRed, isSpyMaster, winner, useTimer } = this.state;
+    const { 
+      score, 
+      isPlayerRed, 
+      isSpyMaster, 
+      winner, 
+      useTimer, 
+      winConditions, 
+      height, 
+      width 
+    } = this.state;
+
     return (
       <Game 
         isPlayerRed={isPlayerRed} 
@@ -115,6 +120,10 @@ class GameContainer extends Component {
         winner={winner}
         useTimer={useTimer}
         handleTimerChange={this.handleTimerChange}
+        redTotal={winConditions.red}
+        blueTotal={winConditions.blue}
+        height={height}
+        width={width}
       />
     );
   }
