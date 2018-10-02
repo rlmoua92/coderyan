@@ -13,8 +13,21 @@
 
 .game-stats {
 	justify-content: center;
+	text-align: center;
 }
 
-.settings-icon {
-	font-size: 1.25em;
+button.switch-players {
+	font-size: 1.325em;
+	border-radius: .25em;
+	margin: .425em;
+	border: 0;
+	background-color: #e0e0e0;
+}
+
+button.switch-players:hover {
+	opacity: .875;
+}
+
+button.switch-players:focus {
+	outline: 0;
 }

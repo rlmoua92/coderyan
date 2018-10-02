@@ -5,7 +5,12 @@
 	text-align: center;
 }
 
-.timer {
+.timer-title {
+	font-size: .75em;
+	margin-bottom: .25em;
+}
+
+.timer-time {
 	font-family: 'Orbitron', sans-serif;
 	font-size: 2em;
 	color: #03a87c;
@@ -15,6 +20,10 @@
 	padding: .125em;
 }
 
-.disabled {
+.timer-icon:hover {
+	color: $nav-link-hover-color;
+}
+
+.timer-icon.disabled {
 	color: $disabled-color;
 }

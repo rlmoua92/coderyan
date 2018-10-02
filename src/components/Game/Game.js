@@ -35,7 +35,7 @@ const Game = (props) => {
             /> :
             <div className="switch-players">
               <button className="switch-players" onClick={props.onEndTurnClick}>
-                END TURN
+                END<br/ >TURN
               </button>
             </div>
           }
@@ -45,7 +45,7 @@ const Game = (props) => {
           showModal={props.showSettings} 
           modalContent={settingsContent}
           buttonContent={settingsButton}
-          onButtonClick={props.onSettingsClick}
+          toggleModal={props.onSettingsClick}
         />
       </div>
       <Board 

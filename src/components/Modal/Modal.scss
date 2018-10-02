@@ -1,7 +1,7 @@
 @import '../../common';
 
 .modal-container {
-	box-sizing: border-box;
+  box-sizing: border-box;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -11,9 +11,9 @@
 }
 
 .modal-content {
-	background-color: $nav-bg-color;
-	min-height: 150px;
-	width: 100%;
+  background-color: $nav-bg-color;
+  min-height: 150px;
+  width: 100%;
     max-width: 400px;
     padding: 1em;
     position: absolute;
@@ -22,30 +22,30 @@
     transform: translate(-50%, -50%);
 
     .modal-button {
-    	position: absolute;
-    	right: 0;
-    	top: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
     }
 
     h2 {
-    	font-size: 1.25em;
-    	margin-top: 0;
+      font-size: 1.25em;
+      margin-top: 0;
     }
 }
 
 .modal-button-container {
-	text-align:right;
+  text-align:right;
 }
 
 .modal-button {
-	border: 0;
-	background-color: transparent;
-	color: #fff;
-	font-size: 1.25em;
+  border: 0;
+  background-color: transparent;
+  color: $nav-text-color;
+  font-size: 1.25em;
 }
 .modal-button:focus {
-	outline: 0;
+  outline: 0;
 }
 .modal-button:hover {
-	color: #616161;
+  color: $nav-link-hover-color;
 }

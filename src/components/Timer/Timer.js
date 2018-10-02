@@ -16,7 +16,8 @@ const Timer = (props) => {
   return (
     <div className="timer-container">
       <div className="timer">
-        {seconds}
+        <div className="timer-title">TIME</div>
+        <div className="timer-time">{seconds}</div>
       </div>
       {
         timerOn ?

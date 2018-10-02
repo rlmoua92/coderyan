@@ -24,7 +24,7 @@ class GameContainer extends Component {
       },
       height: 5,
       width: 5,
-      showSettings: false,
+      showSettings: true,
       timerOn: false,
       timerSeconds: 60,
     }
