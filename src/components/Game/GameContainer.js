@@ -120,6 +120,7 @@ class GameContainer extends Component {
         winner={winner}
         useTimer={useTimer}
         handleTimerChange={this.handleTimerChange}
+        onTimerEnd={this.turnEnd}
         redTotal={winConditions.red}
         blueTotal={winConditions.blue}
         height={height}

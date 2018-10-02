@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Board from '../Board';
+import Timer from '../Timer';
 
 const Game = (props) => {
   return (
@@ -16,14 +17,7 @@ const Game = (props) => {
             <div className="player">TURN: {props.isPlayerRed ? "RED" : "BLUE"}</div>
           }
           {props.useTimer ?
-            <div className="timer-container">
-              <span className="timer">
-                1:00
-              </span>
-              <button className="timer-button">
-                START
-              </button>
-            </div> :
+            <Timer onTimerEnd={props.onTimerEnd}/> :
             <div className="switch-players">
               <button className="switch-players" onClick={props.onEndTurnClick}>
                 END TURN
