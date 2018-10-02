@@ -56,15 +56,21 @@ class BoardContainer extends Component {
   }
 
   render() {
-    const { height, width } = this.props;
+    const { 
+      height, 
+      width,
+      onCardClick,
+      isSpyMaster,
+      winner
+    } = this.props;
     return (
       <Board 
         height={height} 
         width={width} 
         cards={this.cards} 
-        onCardClick={this.props.onCardClick} 
-        isSpyMaster={this.props.isSpyMaster} 
-        winner={this.props.winner}
+        onCardClick={onCardClick} 
+        isSpyMaster={isSpyMaster} 
+        winner={winner}
       />
     );
   }

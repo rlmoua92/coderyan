@@ -1,0 +1,24 @@
+@import '../../common';
+
+.nav-bar {
+	background-color: $nav-bg-color;
+	color: $nav-text-color;
+	padding: .25em 1em;
+	justify-content: space-between;
+}
+
+.nav-bar > div {
+	flex-basis: 30%;
+}
+
+.game-stats {
+	justify-content: center;
+}
+
+.settings-icon {
+	text-align: right;
+}
+
+.settings-icon {
+	font-size: 1.25em;
+}

@@ -24,7 +24,12 @@ class GameContainer extends Component {
       },
       height: 5,
       width: 5,
+      showSettings: false,
+      timerOn: false,
+      timerSeconds: 60,
     }
+
+    this.timerTickInterval;
 
     this.onCardClick = this.onCardClick.bind(this);
     this.turnEnd = this.turnEnd.bind(this);
@@ -32,6 +37,12 @@ class GameContainer extends Component {
     this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
     this.checkWin = this.checkWin.bind(this);
     this.handleTimerChange = this.handleTimerChange.bind(this);
+    this.toggleSettings = this.toggleSettings.bind(this);
+    this.timerTick = this.timerTick.bind(this);
+    this.onStartTimerClick = this.onStartTimerClick.bind(this);
+    this.onStopTimerClick = this.onStopTimerClick.bind(this);
+    this.onClearTimerClick = this.onClearTimerClick.bind(this);
+    this.onTimerEnd = this.onTimerEnd.bind(this);
   }
 
   componentDidUpdate() {
@@ -57,7 +68,7 @@ class GameContainer extends Component {
       this.gameOver(winner);
     }
     if (value !== current_player.toLowerCase()) {
-      this.turnEnd();
+      this.state.timerOn ? this.onClearTimerClick() : this.turnEnd();
     }
   }
 
@@ -78,6 +89,49 @@ class GameContainer extends Component {
   handleTimerChange(e) {
     this.setState({
       useTimer: e.target.checked
+    });
+  }
+
+  timerTick() {
+    this.setState(prevState => {
+      return {
+        timerSeconds: prevState.timerSeconds - 1
+      }
+    });
+  }
+
+  onStartTimerClick() {
+    this.setState({ timerOn: true });
+    this.timerTickInterval = setInterval(this.timerTick, 1000);
+  }
+
+  onStopTimerClick() {
+    this.setState({ timerOn: false });
+    clearInterval(this.timerTickInterval);
+  }
+
+  onClearTimerClick() {
+    this.setState({ 
+      timerOn: false,
+      timerSeconds: 0, 
+    });
+    clearInterval(this.timerTickInterval);
+  }
+
+  onTimerEnd() {
+    this.turnEnd();
+    this.setState({ 
+      timerOn: false,
+      timerSeconds: 60, 
+    });
+    clearInterval(this.timerTickInterval);
+  }
+
+  toggleSettings() {
+    this.setState(prevState => {
+      return {
+        showSettings: !prevState.showSettings
+      }
     });
   }
 
@@ -106,7 +160,10 @@ class GameContainer extends Component {
       useTimer, 
       winConditions, 
       height, 
-      width 
+      width,
+      showSettings,
+      timerOn,
+      timerSeconds,
     } = this.state;
 
     return (
@@ -119,12 +176,20 @@ class GameContainer extends Component {
         onSpyMasterClick={this.toggleSpyMaster}
         winner={winner}
         useTimer={useTimer}
+        timerOn={timerOn}
         handleTimerChange={this.handleTimerChange}
-        onTimerEnd={this.turnEnd}
+        onTimerEnd={this.onTimerEnd}
+        timerSeconds={timerSeconds}
+        onStartTimerClick={this.onStartTimerClick}
+        onStopTimerClick={this.onStopTimerClick}
+        onClearTimerClick={this.onClearTimerClick}
+        timerInterval={this.timerTickInterval}
         redTotal={winConditions.red}
         blueTotal={winConditions.blue}
         height={height}
         width={width}
+        showSettings={showSettings}
+        onSettingsClick={this.toggleSettings}
       />
     );
   }

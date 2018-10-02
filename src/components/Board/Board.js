@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Card from '../Card';
+import './Board.scss';
 
 class Board extends Component {
   generateBoard() {
-    const { height, width, cards } = this.props;
+    const { 
+      height, 
+      width, 
+      cards,
+      onCardClick,
+      isSpyMaster,
+      winner, 
+    } = this.props;
     let board = [];
     for (let i = 0; i < height; i++) {
       let children = [];
@@ -15,9 +23,9 @@ class Board extends Component {
             key={j} 
             value={card.value} 
             team={card.color} 
-            onCardClick={this.props.onCardClick} 
-            isSpyMaster={this.props.isSpyMaster} 
-            winner={this.props.winner}
+            onCardClick={onCardClick} 
+            isSpyMaster={isSpyMaster} 
+            winner={winner}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);

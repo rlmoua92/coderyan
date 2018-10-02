@@ -1,0 +1,20 @@
+@import '../../common';
+
+.timer-container {
+	padding: 0 1em;
+	text-align: center;
+}
+
+.timer {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 2em;
+	color: #03a87c;
+}
+
+.timer-icon {
+	padding: .125em;
+}
+
+.disabled {
+	color: $disabled-color;
+}

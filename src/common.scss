@@ -1,0 +1,17 @@
+$font-stack: Helvetica, sans-seif;
+$nav-bg-color: #212121;
+$nav-text-color: #fff;
+$disabled-color: #616161;
+
+body {
+	font-family: $font-stack;
+	margin: 0;
+}
+
+.flex {
+	display: flex;
+}
+
+.v-align {
+	align-items: center;
+}
