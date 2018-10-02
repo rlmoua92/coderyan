@@ -2,11 +2,16 @@ import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Board from '../Board';
 import Timer from '../Timer';
+import Modal from '../Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Game.scss';
 
 const Game = (props) => {
+  const settingsContent = <div><h2>SETTINGS</h2>
+    <div><label><input type="checkbox" checked={props.useTimer} onChange={props.handleTimerChange} />Use Timer</label></div>
+    <div><label><input type="checkbox" checked={props.isSpyMaster} onChange={props.onSpyMasterClick} />Spymaster</label></div></div>;
+  const settingsButton = <FontAwesomeIcon icon={faCog} />;
   return (
     <div>
       <div className="nav-bar flex v-align">
@@ -36,17 +41,12 @@ const Game = (props) => {
           }
           <div>BLUE: {props.score.blue}</div>
         </div>
-        <div className="settings-icon">
-          <FontAwesomeIcon icon={faCog} onClick={props.onSettingsClick} />
-        </div>
-        {props.showSettings ?
-          <div className="settings-modal">
-            SETTINGS
-            <div><label><input type="checkbox" checked={props.useTimer} onChange={props.handleTimerChange} />Use Timer</label></div>
-            <div><label><input type="checkbox" checked={props.isSpyMaster} onChange={props.onSpyMasterClick} />Spymaster</label></div>
-          </div> :
-          null
-        }
+        <Modal 
+          showModal={props.showSettings} 
+          modalContent={settingsContent}
+          buttonContent={settingsButton}
+          onButtonClick={props.onSettingsClick}
+        />
       </div>
       <Board 
         onCardClick={props.onCardClick} 
