@@ -1,0 +1,13 @@
+TODO:
+-Style to better visually match game
+-Add seeding to randomization
+	-Allows for multiple devices to show same view
+	-seed draw form URL query or URL path
+		-i.e. coderyan.com/zhy2 would use zhy2 as the seed
+-Improve word storage
+	-DB?
+	-Pull from API?
+-Add networking capabilities
+	-Connect to same "ROOM" on multiple devices
+	-Allows for certain devices to connect as SPYMASTER
+		-remove SPYMASTERtoggle afterwards
