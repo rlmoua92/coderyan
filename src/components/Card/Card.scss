@@ -22,6 +22,11 @@
 .card-hidden {
   background-color: $hidden-color;
 }
+.card-hidden:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
 .card-red {
   background-color: $red-color;
 }

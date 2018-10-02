@@ -20,7 +20,8 @@
 	padding: .125em;
 }
 
-.timer-icon:hover {
+.timer-icon:not(.disabled):hover {
+	cursor: pointer;
 	color: $nav-link-hover-color;
 }
 
