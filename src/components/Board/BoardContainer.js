@@ -14,7 +14,7 @@ function randomWordPicker(wordList, numWords) {
       numList.push(randNum);
     }
   }
-  let result = numList.map(num => wordList[num]);
+  let result = numList.map(num => wordList[num].toUpperCase());
   return result;
 }
 
