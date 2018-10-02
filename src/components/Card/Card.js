@@ -13,7 +13,7 @@ const Card = (props) => {
   } = props;
 
   const cardClass = classNames(
-    'card',
+    'card flex',
     { 'card-hidden': isHidden === true },
     { 'card-red': team === 'red' && (isHidden === false || isSpyMaster === true)},
     { 'card-blue': team === 'blue' && (isHidden === false || isSpyMaster === true)},
@@ -22,7 +22,11 @@ const Card = (props) => {
   );
 
   return (
-    <span className={cardClass} onClick={onClick}>{value}</span>
+    <div className={cardClass} onClick={onClick}>
+      <div className="cardText-container flex v-align flex-100 ">
+        <div className="cardText flex-100 ">{value}</div>
+      </div>
+    </div>
   );
 }
 

@@ -2,10 +2,20 @@ $font-stack: Helvetica, sans-seif;
 $nav-bg-color: #212121;
 $nav-text-color: #fff;
 $disabled-color: #616161;
+$nav-link-hover-color: #bdbdbd;
+$hidden-color: #fff8e1;
+$red-color: #f44336;
+$blue-color: #2196f3;
+$neutral-color: #dce775;
+$black-color: #212121;
 
 body {
 	font-family: $font-stack;
 	margin: 0;
+}
+
+button:hover {
+	cursor: pointer;
 }
 
 .flex {
@@ -14,4 +24,8 @@ body {
 
 .v-align {
 	align-items: center;
+}
+
+.flex-100 {
+	flex-basis: 100%;
 }
