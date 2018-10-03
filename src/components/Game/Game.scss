@@ -16,7 +16,7 @@
 	text-align: center;
 }
 
-button.switch-players {
+button.nav-button {
 	font-size: 1.325em;
 	border-radius: .25em;
 	margin: .425em;
@@ -24,10 +24,10 @@ button.switch-players {
 	background-color: #e0e0e0;
 }
 
-button.switch-players:hover {
+button.nav-button:hover {
 	opacity: .875;
 }
 
-button.switch-players:focus {
+button.nav-button:focus {
 	outline: 0;
 }

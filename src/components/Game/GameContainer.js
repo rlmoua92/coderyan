@@ -27,6 +27,7 @@ class GameContainer extends Component {
       showSettings: true,
       timerOn: false,
       timerSeconds: 60,
+      key: 0,
     }
 
     this.timerTickInterval;
@@ -43,6 +44,7 @@ class GameContainer extends Component {
     this.stopTimer = this.stopTimer.bind(this);
     this.clearTimer = this.clearTimer.bind(this);
     this.onTimerEnd = this.onTimerEnd.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   componentDidUpdate() {
@@ -154,6 +156,31 @@ class GameContainer extends Component {
     console.log("Game Over. " + value + " TEAM WINS!")
   }
 
+  reset() {
+    const firstPlayer = getRandomInt(0, 100) % 2;
+
+    this.setState({
+      score: {
+        red: 0,
+        blue: 0
+      },
+      isPlayerRed: firstPlayer,
+      winner: null,
+      winConditions: {
+        red: firstPlayer ? 9 : 8,
+        blue: firstPlayer ? 8 : 9
+      },
+      timerOn: false,
+      timerSeconds: 60,
+    });
+
+    this.setState(prevState => {
+      return {
+        key: prevState.key + 1
+      }
+    });
+  }
+
   render() {
     const { 
       score, 
@@ -167,6 +194,7 @@ class GameContainer extends Component {
       showSettings,
       timerOn,
       timerSeconds,
+      key,
     } = this.state;
 
     return (
@@ -192,6 +220,8 @@ class GameContainer extends Component {
         width={width}
         showSettings={showSettings}
         onSettingsClick={this.toggleSettings}
+        onResetClick={this.reset}
+        key={key}
       />
     );
   }

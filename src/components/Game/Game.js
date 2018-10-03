@@ -30,6 +30,7 @@ const Game = (props) => {
     width,
     timerOn,
     onCardClick,
+    onResetClick,
   } = props;
 
   const settingsContent = <div><h2>SETTINGS</h2>
@@ -47,20 +48,26 @@ const Game = (props) => {
         </div>
         <div className="game-stats flex v-align">
           <div>RED: {score.red}</div>
-          {useTimer ?
-            <Timer 
-              onTimerEnd={onTimerEnd} 
-              timerOn={timerOn} 
-              seconds={timerSeconds}
-              onStartClick={startTimer}
-              onStopClick={stopTimer}
-              onClearClick={clearTimer}
-            /> :
-            <div className="switch-players">
-              <button className="switch-players" onClick={onEndTurnClick}>
-                END<br/ >TURN
+          {winner ?
+            <div className="nav-button-container">
+              <button className="nav-button" onClick={onResetClick}>
+                PLAY<br/ >AGAIN
               </button>
-            </div>
+            </div> :
+            useTimer ?
+              <Timer 
+                onTimerEnd={onTimerEnd} 
+                timerOn={timerOn} 
+                seconds={timerSeconds}
+                onStartClick={startTimer}
+                onStopClick={stopTimer}
+                onClearClick={clearTimer}
+              /> :
+              <div className="nav-button-container">
+                <button className="nav-button" onClick={onEndTurnClick}>
+                  END<br/ >TURN
+                </button>
+              </div>
           }
           <div>BLUE: {score.blue}</div>
         </div>
