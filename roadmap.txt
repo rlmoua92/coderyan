@@ -1,5 +1,4 @@
 TODO:
--Add clicking outside of modal content to close modal
 -Style to better visually match game
 -Add seeding to randomization
 	-Allows for multiple devices to show same view
