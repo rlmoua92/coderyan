@@ -39,9 +39,9 @@ class GameContainer extends Component {
     this.handleTimerChange = this.handleTimerChange.bind(this);
     this.toggleSettings = this.toggleSettings.bind(this);
     this.timerTick = this.timerTick.bind(this);
-    this.onStartTimerClick = this.onStartTimerClick.bind(this);
-    this.onStopTimerClick = this.onStopTimerClick.bind(this);
-    this.onClearTimerClick = this.onClearTimerClick.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.clearTimer = this.clearTimer.bind(this);
     this.onTimerEnd = this.onTimerEnd.bind(this);
   }
 
@@ -68,7 +68,7 @@ class GameContainer extends Component {
       this.gameOver(winner);
     }
     if (value !== current_player.toLowerCase()) {
-      this.state.timerOn ? this.onClearTimerClick() : this.turnEnd();
+      this.state.timerOn ? this.clearTimer() : this.turnEnd();
     }
   }
 
@@ -100,17 +100,17 @@ class GameContainer extends Component {
     });
   }
 
-  onStartTimerClick() {
+  startTimer() {
     this.setState({ timerOn: true });
     this.timerTickInterval = setInterval(this.timerTick, 1000);
   }
 
-  onStopTimerClick() {
+  stopTimer() {
     this.setState({ timerOn: false });
     clearInterval(this.timerTickInterval);
   }
 
-  onClearTimerClick() {
+  clearTimer() {
     this.setState({ 
       timerOn: false,
       timerSeconds: 0, 
@@ -128,6 +128,9 @@ class GameContainer extends Component {
   }
 
   toggleSettings() {
+    if (this.state.useTimer && this.state.timerOn) {
+      this.stopTimer();
+    }
     this.setState(prevState => {
       return {
         showSettings: !prevState.showSettings
@@ -180,9 +183,9 @@ class GameContainer extends Component {
         handleTimerChange={this.handleTimerChange}
         onTimerEnd={this.onTimerEnd}
         timerSeconds={timerSeconds}
-        onStartTimerClick={this.onStartTimerClick}
-        onStopTimerClick={this.onStopTimerClick}
-        onClearTimerClick={this.onClearTimerClick}
+        startTimer={this.startTimer}
+        stopTimer={this.stopTimer}
+        clearTimer={this.clearTimer}
         redTotal={winConditions.red}
         blueTotal={winConditions.blue}
         height={height}

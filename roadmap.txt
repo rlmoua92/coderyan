@@ -1,6 +1,5 @@
 TODO:
 -Add clicking outside of modal content to close modal
--If timer is enabled, stop it when Settings modal is opened
 -Style to better visually match game
 -Add seeding to randomization
 	-Allows for multiple devices to show same view

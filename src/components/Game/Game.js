@@ -18,9 +18,9 @@ const Game = (props) => {
     score,
     onTimerEnd,
     timerSeconds,
-    onStartTimerClick,
-    onStopTimerClick,
-    onClearTimerClick,
+    startTimer,
+    stopTimer,
+    clearTimer,
     onEndTurnClick,
     showSettings,
     onSettingsClick,
@@ -52,9 +52,9 @@ const Game = (props) => {
               onTimerEnd={onTimerEnd} 
               timerOn={timerOn} 
               seconds={timerSeconds}
-              onStartClick={onStartTimerClick}
-              onStopClick={onStopTimerClick}
-              onClearClick={onClearTimerClick}
+              onStartClick={startTimer}
+              onStopClick={stopTimer}
+              onClearClick={clearTimer}
             /> :
             <div className="switch-players">
               <button className="switch-players" onClick={onEndTurnClick}>
