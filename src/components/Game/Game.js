@@ -33,9 +33,12 @@ const Game = (props) => {
     onResetClick,
     gameStarted,
     startGame,
+    randKey,
+    onRoomKeyChange
   } = props;
 
   const settingsContent = <div className="flex flex-column"><h2>SETTINGS</h2>
+    <div className="room-key"><label>ROOM KEY: </label><input type="text" value={randKey} onChange={onRoomKeyChange} /></div>
     <div><label><input type="checkbox" checked={useTimer} onChange={handleTimerChange} />Use Timer</label></div>
     <div><label><input type="checkbox" checked={isSpyMaster} onChange={onSpyMasterClick} />Spymaster</label></div>
     {gameStarted ? null : <div className="flex v-align-bottom modal-content-button-container"><button className="modal-content-button" onClick={() => {startGame(); toggleSettings();}}>START GAME</button></div>}</div>;
@@ -44,6 +47,7 @@ const Game = (props) => {
     <div>
       <div className="nav-bar flex v-align-center">
         <div>
+          <div className="room">ROOM: {randKey}</div>
           {winner ? 
             <div className="winner">WINNER: {winner}</div> :
             <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>
@@ -94,6 +98,7 @@ const Game = (props) => {
           width={width}
           timerOn={timerOn}
           useTimer={useTimer}
+          randKey={randKey}
         /> : null
       }
     </div>

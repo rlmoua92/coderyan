@@ -3,11 +3,24 @@ import ReactDOM from 'react-dom';
 import Game from './Game.js';
 import { getRandomInt } from '../../common.js';
 
+function randomString(len) {
+  let result = [];
+  let alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  for (let i = 0; i < len; i ++) {
+    let randInd = getRandomInt(0, alpha.length);
+    let randLetter = alpha[randInd];
+    result.push(randLetter);
+  }
+  return result.join("");
+}
+
 class GameContainer extends Component {
   constructor(props) {
     super(props);
 
     const firstPlayer = getRandomInt(0, 100) % 2;
+
+    const roomKey = randomString(5);
 
     this.state = {
       score: {
@@ -27,8 +40,9 @@ class GameContainer extends Component {
       showSettings: true,
       timerOn: false,
       timerSeconds: 60,
-      key: 0,
+      gameKey: 0,
       gameStarted: false,
+      randKey: roomKey,
     }
 
     this.timerTickInterval;
@@ -47,6 +61,7 @@ class GameContainer extends Component {
     this.onTimerEnd = this.onTimerEnd.bind(this);
     this.reset = this.reset.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
   }
 
   componentDidUpdate() {
@@ -164,6 +179,12 @@ class GameContainer extends Component {
     console.log("Game Over. " + value + " TEAM WINS!")
   }
 
+  onRoomKeyChange(e) {
+    this.setState({
+      randKey: e.target.value
+    });
+  }
+
   reset() {
     const firstPlayer = getRandomInt(0, 100) % 2;
 
@@ -184,7 +205,7 @@ class GameContainer extends Component {
 
     this.setState(prevState => {
       return {
-        key: prevState.key + 1
+        gameKey: prevState.gameKey + 1
       }
     });
   }
@@ -202,8 +223,9 @@ class GameContainer extends Component {
       showSettings,
       timerOn,
       timerSeconds,
-      key,
+      gameKey,
       gameStarted,
+      randKey,
     } = this.state;
 
     return (
@@ -230,9 +252,11 @@ class GameContainer extends Component {
         showSettings={showSettings}
         toggleSettings={this.toggleSettings}
         onResetClick={this.reset}
-        key={key}
+        key={gameKey}
         gameStarted={gameStarted}
         startGame={this.startGame}
+        randKey={randKey}
+        onRoomKeyChange={this.onRoomKeyChange}
       />
     );
   }

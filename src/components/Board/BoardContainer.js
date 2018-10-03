@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Board from './Board.js';
 import wordList from '../../words.json';
-import { getRandomInt } from '../../common.js';
+import uheprng from 'random-seed';
 
 const words = wordList.words;
 
-function randomWordPicker(wordList, numWords) {
+function randomWordPicker(randGen, wordList, numWords) {
   let numList = [];
   while (numList.length < numWords) {
-    let randNum = getRandomInt(0, wordList.length);
+    let randNum = randGen(wordList.length);
+    console.log(randNum);
     if (!numList.includes(randNum)) {
       numList.push(randNum);
     }
@@ -28,14 +29,14 @@ function addMultipleToList(...args) {
   return result;
 }
 
-function randomWordColorAssociation(wordList, colorList) {
+function randomWordColorAssociation(randGen, wordList, colorList) {
   if (wordList.length !== colorList.length) {
     return;
   }
   let result = [];
   while (wordList.length > 0) {
-    let randWordInd = getRandomInt(0, wordList.length);
-    let randColorInd = getRandomInt(0, colorList.length);
+    let randWordInd = randGen(0, wordList.length);
+    let randColorInd = randGen(0, colorList.length);
     result.push({'value': wordList[randWordInd], 'color': colorList[randColorInd]});
     wordList.splice(randWordInd,1);
     colorList.splice(randColorInd,1);
@@ -49,10 +50,13 @@ class BoardContainer extends Component {
   constructor(props) {
     super(props);
 
+    console.log(this.props.randKey);
+    const gen = uheprng.create(this.props.randKey);
+
     const neutralCount = (this.props.height * this.props.width) - 1 - this.props.redTotal - this.props.blueTotal;
     const cardColors = addMultipleToList([this.props.redTotal,"red"],[this.props.blueTotal,"blue"],[neutralCount,"neutral"],[1,"black"]);
-    const randomWords = randomWordPicker(words, this.props.height * this.props.width);
-    this.cards = randomWordColorAssociation(randomWords, cardColors);
+    const randomWords = randomWordPicker(gen, words, this.props.height * this.props.width);
+    this.cards = randomWordColorAssociation(gen, randomWords, cardColors);
   }
 
   render() {
