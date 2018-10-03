@@ -62,6 +62,7 @@ const Game = (props) => {
                 onStartClick={startTimer}
                 onStopClick={stopTimer}
                 onClearClick={clearTimer}
+                isSpyMaster={isSpyMaster}
               /> :
               <div className="nav-button-container">
                 <button className="nav-button" onClick={onEndTurnClick}>

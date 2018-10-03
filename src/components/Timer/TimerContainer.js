@@ -17,13 +17,14 @@ class TimerContainer extends Component {
       onStopClick,
       onClearClick,
       seconds,
+      isSpyMaster
     } = this.props;
     return (
       <Timer 
         timerOn={timerOn} 
-        onStartClick={onStartClick} 
-        onStopClick={onStopClick} 
-        onClearClick={onClearClick} 
+        onStartClick={isSpyMaster || timerOn ? null : onStartClick} 
+        onStopClick={isSpyMaster || !timerOn ? null : onStopClick} 
+        onClearClick={isSpyMaster || !timerOn ? null : onClearClick} 
         seconds={seconds}
       />
     );
