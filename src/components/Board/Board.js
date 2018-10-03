@@ -12,6 +12,8 @@ class Board extends Component {
       onCardClick,
       isSpyMaster,
       winner, 
+      timerOn,
+      useTimer,
     } = this.props;
     let board = [];
     for (let i = 0; i < height; i++) {
@@ -26,6 +28,8 @@ class Board extends Component {
             onCardClick={onCardClick} 
             isSpyMaster={isSpyMaster} 
             winner={winner}
+            timerOn={timerOn}
+            useTimer={useTimer}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);

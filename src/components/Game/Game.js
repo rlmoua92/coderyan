@@ -8,54 +8,79 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Game.scss';
 
 const Game = (props) => {
+  const {
+    useTimer,
+    handleTimerChange,
+    isSpyMaster,
+    onSpyMasterClick,
+    winner,
+    isPlayerRed,
+    score,
+    onTimerEnd,
+    timerSeconds,
+    onStartTimerClick,
+    onStopTimerClick,
+    onClearTimerClick,
+    onEndTurnClick,
+    showSettings,
+    onSettingsClick,
+    redTotal,
+    blueTotal,
+    height,
+    width,
+    timerOn,
+    onCardClick,
+  } = props;
+
   const settingsContent = <div><h2>SETTINGS</h2>
-    <div><label><input type="checkbox" checked={props.useTimer} onChange={props.handleTimerChange} />Use Timer</label></div>
-    <div><label><input type="checkbox" checked={props.isSpyMaster} onChange={props.onSpyMasterClick} />Spymaster</label></div></div>;
+    <div><label><input type="checkbox" checked={useTimer} onChange={handleTimerChange} />Use Timer</label></div>
+    <div><label><input type="checkbox" checked={isSpyMaster} onChange={onSpyMasterClick} />Spymaster</label></div></div>;
   const settingsButton = <FontAwesomeIcon icon={faCog} />;
   return (
     <div>
       <div className="nav-bar flex v-align">
         <div>
-          {props.winner ? 
-            <div className="winner">WINNER: {props.winner}</div> :
-            <div className="player">TURN: {props.isPlayerRed ? "RED" : "BLUE"}</div>
+          {winner ? 
+            <div className="winner">WINNER: {winner}</div> :
+            <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>
           }
         </div>
         <div className="game-stats flex v-align">
-          <div>RED: {props.score.red}</div>
-          {props.useTimer ?
+          <div>RED: {score.red}</div>
+          {useTimer ?
             <Timer 
-              onTimerEnd={props.onTimerEnd} 
-              timerOn={props.timerOn} 
-              seconds={props.timerSeconds}
-              onStartClick={props.onStartTimerClick}
-              onStopClick={props.onStopTimerClick}
-              onClearClick={props.onClearTimerClick}
-              tickInterval={props.timerTickInterval}
+              onTimerEnd={onTimerEnd} 
+              timerOn={timerOn} 
+              seconds={timerSeconds}
+              onStartClick={onStartTimerClick}
+              onStopClick={onStopTimerClick}
+              onClearClick={onClearTimerClick}
             /> :
             <div className="switch-players">
-              <button className="switch-players" onClick={props.onEndTurnClick}>
+              <button className="switch-players" onClick={onEndTurnClick}>
                 END<br/ >TURN
               </button>
             </div>
           }
-          <div>BLUE: {props.score.blue}</div>
+          <div>BLUE: {score.blue}</div>
         </div>
         <Modal 
-          showModal={props.showSettings} 
+          showModal={showSettings} 
           modalContent={settingsContent}
           buttonContent={settingsButton}
-          toggleModal={props.onSettingsClick}
+          toggleModal={onSettingsClick}
         />
       </div>
       <Board 
-        onCardClick={props.onCardClick} 
-        isSpyMaster={props.isSpyMaster}
-        winner={props.winner}
-        redTotal={props.redTotal}
-        blueTotal={props.blueTotal}
-        height={props.height}
-        width={props.width}
+        onCardClick={onCardClick} 
+        isSpyMaster={isSpyMaster}
+        winner={winner}
+        redTotal={redTotal}
+        blueTotal={blueTotal}
+        height={height}
+        width={width}
+        timerOn={timerOn}
+        useTimer={useTimer}
       />
     </div>
   );

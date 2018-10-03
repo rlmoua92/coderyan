@@ -183,7 +183,6 @@ class GameContainer extends Component {
         onStartTimerClick={this.onStartTimerClick}
         onStopTimerClick={this.onStopTimerClick}
         onClearTimerClick={this.onClearTimerClick}
-        timerInterval={this.timerTickInterval}
         redTotal={winConditions.red}
         blueTotal={winConditions.blue}
         height={height}

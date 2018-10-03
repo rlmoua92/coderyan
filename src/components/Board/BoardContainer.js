@@ -61,7 +61,9 @@ class BoardContainer extends Component {
       width,
       onCardClick,
       isSpyMaster,
-      winner
+      winner,
+      timerOn,
+      useTimer,
     } = this.props;
     return (
       <Board 
@@ -71,6 +73,8 @@ class BoardContainer extends Component {
         onCardClick={onCardClick} 
         isSpyMaster={isSpyMaster} 
         winner={winner}
+        timerOn={timerOn}
+        useTimer={useTimer}
       />
     );
   }
