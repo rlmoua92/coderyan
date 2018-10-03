@@ -23,7 +23,7 @@ const Game = (props) => {
     clearTimer,
     onEndTurnClick,
     showSettings,
-    onSettingsClick,
+    toggleSettings,
     redTotal,
     blueTotal,
     height,
@@ -31,22 +31,25 @@ const Game = (props) => {
     timerOn,
     onCardClick,
     onResetClick,
+    gameStarted,
+    startGame,
   } = props;
 
-  const settingsContent = <div><h2>SETTINGS</h2>
+  const settingsContent = <div className="flex flex-column"><h2>SETTINGS</h2>
     <div><label><input type="checkbox" checked={useTimer} onChange={handleTimerChange} />Use Timer</label></div>
-    <div><label><input type="checkbox" checked={isSpyMaster} onChange={onSpyMasterClick} />Spymaster</label></div></div>;
+    <div><label><input type="checkbox" checked={isSpyMaster} onChange={onSpyMasterClick} />Spymaster</label></div>
+    {gameStarted ? null : <div className="flex v-align-bottom modal-content-button-container"><button className="modal-content-button" onClick={() => {startGame(); toggleSettings();}}>START GAME</button></div>}</div>;
   const settingsButton = <FontAwesomeIcon icon={faCog} />;
   return (
     <div>
-      <div className="nav-bar flex v-align">
+      <div className="nav-bar flex v-align-center">
         <div>
           {winner ? 
             <div className="winner">WINNER: {winner}</div> :
             <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>
           }
         </div>
-        <div className="game-stats flex v-align">
+        <div className="game-stats flex v-align-center">
           <div>RED: {score.red}</div>
           {winner ?
             <div className="nav-button-container">
@@ -76,20 +79,23 @@ const Game = (props) => {
           showModal={showSettings} 
           modalContent={settingsContent}
           buttonContent={settingsButton}
-          toggleModal={onSettingsClick}
+          toggleModal={toggleSettings}
+          enableClosing={gameStarted}
         />
       </div>
-      <Board 
-        onCardClick={onCardClick} 
-        isSpyMaster={isSpyMaster}
-        winner={winner}
-        redTotal={redTotal}
-        blueTotal={blueTotal}
-        height={height}
-        width={width}
-        timerOn={timerOn}
-        useTimer={useTimer}
-      />
+      {gameStarted ? 
+        <Board 
+          onCardClick={onCardClick} 
+          isSpyMaster={isSpyMaster}
+          winner={winner}
+          redTotal={redTotal}
+          blueTotal={blueTotal}
+          height={height}
+          width={width}
+          timerOn={timerOn}
+          useTimer={useTimer}
+        /> : null
+      }
     </div>
   );
 }

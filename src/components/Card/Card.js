@@ -23,7 +23,7 @@ const Card = (props) => {
 
   return (
     <div className={cardClass} onClick={onClick}>
-      <div className="cardText-container flex v-align flex-100 ">
+      <div className="cardText-container flex v-align-center flex-100 ">
         <div className="cardText flex-100 ">{value}</div>
       </div>
     </div>

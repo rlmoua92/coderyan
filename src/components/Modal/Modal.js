@@ -10,7 +10,9 @@ const Modal = (props) => {
       {props.showModal ?
         <div className="modal-container">
           <div className="modal-content">
-            <button className="modal-button" onClick={props.toggleModal}><FontAwesomeIcon icon={faTimes} /></button>
+            {props.enableClosing ?
+              <button className="modal-button" onClick={props.toggleModal}><FontAwesomeIcon icon={faTimes} /></button> :
+            null}
             {props.modalContent}
           </div>
         </div> :

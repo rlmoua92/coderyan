@@ -3,11 +3,14 @@ $nav-bg-color: #212121;
 $nav-text-color: #fff;
 $disabled-color: #616161;
 $nav-link-hover-color: #bdbdbd;
+$nav-button-bg-color: #e0e0e0;
 $hidden-color: #fff8e1;
 $red-color: #f44336;
 $blue-color: #2196f3;
 $neutral-color: #dce775;
 $black-color: #212121;
+$timer-font: 'Orbitron', sans-serif;
+$timer-color: #03a87c;
 
 body {
 	font-family: $font-stack;
@@ -22,8 +25,16 @@ button:hover {
 	display: flex;
 }
 
-.v-align {
+.flex-column {
+	flex-direction: column;
+}
+
+.v-align-center {
 	align-items: center;
+}
+
+.v-align-bottom {
+	align-items: flex-end;
 }
 
 .flex-100 {

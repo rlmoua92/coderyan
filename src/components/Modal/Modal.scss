@@ -11,6 +11,7 @@
 }
 
 .modal-content {
+  display: flex;
   background-color: #000;
   min-height: 150px;
   width: 100%;
@@ -48,4 +49,12 @@
 }
 .modal-button:hover {
   color: $nav-link-hover-color;
+}
+
+.modal-content-button-container {
+  flex-grow: 1;
+}
+
+.modal-content-button:hover {
+  opacity: .75;
 }

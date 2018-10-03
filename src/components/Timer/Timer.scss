@@ -11,9 +11,9 @@
 }
 
 .timer-time {
-	font-family: 'Orbitron', sans-serif;
+	font-family: $timer-font;
 	font-size: 2em;
-	color: #03a87c;
+	color: $timer-color;
 }
 
 .timer-icon {

@@ -21,7 +21,7 @@ button.nav-button {
 	border-radius: .25em;
 	margin: .425em;
 	border: 0;
-	background-color: #e0e0e0;
+	background-color: $nav-button-bg-color;
 }
 
 button.nav-button:hover {

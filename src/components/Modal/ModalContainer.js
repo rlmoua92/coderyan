@@ -18,7 +18,7 @@ class ModalContainer extends Component {
   }
 
   onClick(e) {
-    if(this.props.showModal && e.target.className === "modal-container") {
+    if(this.props.showModal && e.target.className === "modal-container" && this.props.enableClosing) {
       this.props.toggleModal();
     }
   }
@@ -29,7 +29,8 @@ class ModalContainer extends Component {
         showModal={this.props.showModal} 
         modalContent={this.props.modalContent}
         buttonContent={this.props.buttonContent} 
-        toggleModal={this.props.toggleModal} />
+        toggleModal={this.props.toggleModal} 
+        enableClosing={this.props.enableClosing} />
     );
   }
 }
