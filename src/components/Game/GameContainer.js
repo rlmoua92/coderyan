@@ -1,8 +1,6 @@
 import React, { Component }  from 'react';
-import ReactDOM from 'react-dom';
 import Game from './Game.js';
 import uheprng from 'random-seed';
-import { getRandomInt } from '../../common.js';
 
 class GameContainer extends Component {
   constructor(props) {

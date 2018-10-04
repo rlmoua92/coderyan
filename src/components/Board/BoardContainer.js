@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Board from './Board.js';
 import wordList from '../../words.json';
 import uheprng from 'random-seed';

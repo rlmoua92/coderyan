@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Modal from './Modal.js';
 
 class ModalContainer extends Component {

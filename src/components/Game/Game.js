@@ -1,5 +1,4 @@
-import React, { Component }  from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Board from '../Board';
 import Timer from '../Timer';
 import Modal from '../Modal';

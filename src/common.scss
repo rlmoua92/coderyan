@@ -1,21 +1,26 @@
+/*Generic*/
 $font-stack: Helvetica, sans-seif;
-$nav-bg-color: #212121;
-$nav-text-color: #fff;
-$disabled-color: #616161;
 $button-hover-color: #bdbdbd;
 $button-bg-color: #e0e0e0;
 $button-text-color: #000;
+$disabled-color: #616161;
+$error-bg-color: #ffcdd2;
+$error-text-color: #b71c1c;
+/*Nav*/
+$nav-bg-color: #212121;
+$nav-text-color: #fff;
+/*Card*/
 $hidden-color: #fff8e1;
 $red-color: #f44336;
 $blue-color: #2196f3;
 $neutral-color: #dce775;
 $black-color: #212121;
+/*Timer*/
 $timer-font: 'Orbitron', sans-serif;
 $timer-color: #03a87c;
+/*Home*/
 $home-bg-color: #000;
 $home-text-color: #fff;
-$error-bg-color: #ffcdd2;
-$error-text-color: #b71c1c;
 
 * {
   box-sizing: border-box;

@@ -1,7 +1,5 @@
-import React, { Component }  from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { getRandomString } from '../../common.js';
 import './Home.scss';
 
 const Home = (props) => {
