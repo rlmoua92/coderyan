@@ -1,14 +1,14 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
-import { getRandomInt, getRandomString } from '../../common.js';
+import { getRandomInt } from '../../common.js';
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
 
     const firstPlayer = getRandomInt(0, 100) % 2;
-    const roomKey = getRandomString(5);
+    
 
     this.state = {
       score: {
@@ -30,7 +30,6 @@ class GameContainer extends Component {
       timerSeconds: 60,
       gameKey: 0,
       gameStarted: false,
-      randKey: roomKey,
     }
 
     this.startGame = this.startGame.bind(this);
@@ -40,7 +39,6 @@ class GameContainer extends Component {
     this.reset = this.reset.bind(this);
 
     this.toggleSettings = this.toggleSettings.bind(this);
-    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
     this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
     
@@ -91,8 +89,6 @@ class GameContainer extends Component {
 
   reset() {
     const firstPlayer = getRandomInt(0, 100) % 2;
-    const roomKey = getRandomString(5);
-    console.log(roomKey);
 
     this.setState({
       score: {
@@ -108,7 +104,6 @@ class GameContainer extends Component {
       timerOn: false,
       timerSeconds: 60,
       gameStarted: false,
-      randKey: roomKey,
     });
 
     this.setState(prevState => {
@@ -126,12 +121,6 @@ class GameContainer extends Component {
       return {
         showSettings: !prevState.showSettings
       }
-    });
-  }
-
-  onRoomKeyChange(e) {
-    this.setState({
-      randKey: e.target.value
     });
   }
 
@@ -218,8 +207,13 @@ class GameContainer extends Component {
       timerSeconds,
       gameKey,
       gameStarted,
-      randKey,
     } = this.state;
+
+    const {
+      match,
+    } = this.props;
+
+    const randKey = match.url.replace('/','');
 
     return (
       <Game 
@@ -249,7 +243,6 @@ class GameContainer extends Component {
         stopTimer={this.stopTimer}
         clearTimer={this.clearTimer}
         randKey={randKey}
-        onRoomKeyChange={this.onRoomKeyChange}
       />
     );
   }

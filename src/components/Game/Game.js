@@ -34,19 +34,11 @@ const Game = (props) => {
     gameStarted,
     startGame,
     randKey,
-    onRoomKeyChange
   } = props;
 
   const settingsContent = 
   <div className="flex flex-column flex-100">
     <h2>SETTINGS</h2>
-    <div className="room-key">
-      <label>ROOM KEY: </label>{
-        gameStarted ? 
-        <input type="text" value={randKey} readOnly /> : 
-        <input type="text" value={randKey} onChange={onRoomKeyChange} />
-      }
-    </div>
     <div>
       <label>
         <input type="checkbox" checked={useTimer} onChange={onTimerCheck} />
@@ -81,7 +73,7 @@ const Game = (props) => {
     <div>
       <div className="nav-bar flex v-align-center">
         <div>
-          <div className="room">ROOM: {gameStarted ? randKey : null}</div>
+          <div className="room">ROOM: {randKey}</div>
           {winner ? 
             <div className="winner">WINNER: {winner}</div> :
             <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>

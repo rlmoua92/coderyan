@@ -1,6 +1,4 @@
 TODO:
--Get random seed from URL query or URL path
-	-i.e. coderyan.com/zhy2 would use zhy2 as the seed
 -Improve word storage
 	-DB?
 	-Pull from API?
