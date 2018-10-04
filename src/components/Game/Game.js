@@ -54,7 +54,7 @@ const Game = (props) => {
     {
       gameStarted ? 
       <div className="flex v-align-bottom modal-content-button-container">
-        <Link className="modal-content-button flex-50" to="/">
+        <Link className="modal-content-button flex-50 button" to="/">
           NEW GAME
         </Link>
         <button className="modal-content-button flex-50" onClick={toggleSettings}>

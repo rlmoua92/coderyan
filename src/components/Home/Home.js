@@ -2,41 +2,27 @@ import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { getRandomString } from '../../common.js';
+import './Home.scss';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const Home = (props) => {
+  const {
+    randKey,
+    onRoomKeyChange
+  } = props;
 
-    const roomKey = getRandomString(5);
-
-    this.state= {
-      randKey: roomKey,
-    }
-
-    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
-  }
-
-  onRoomKeyChange(e) {
-    this.setState({
-      randKey: e.target.value
-    });
-  }
-
-  render() {
-    const {
-      randKey 
-    } = this.state;
-
-    return (
-      <div className="home-page">
+  return (
+    <div className="home flex v-align-center">
+      <div className="home-content flex flex-column">
         <h1>.codeRyan</h1>
         <div className="roomKey">
-          <label>ROOM KEY</label> <input type="text" value={randKey} onChange={this.onRoomKeyChange} />
+          <label>ENTER A ROOM KEY:</label>
+          <input type="text" value={randKey} onChange={onRoomKeyChange} />
+          {randKey.length <= 0 ? <div className="input-error">ERROR: KEY CANNOT BE BLANK</div> : null}
         </div>
-        <Link to={"/" + randKey} className="button">START GAME</Link>
+        <Link to={"/" + randKey} className="button flex-100">START GAME</Link>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Home;

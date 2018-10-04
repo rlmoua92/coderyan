@@ -6,8 +6,11 @@ TODO:
 	-Connect to same "ROOM" on multiple devices
 	-Allows for certain devices to connect as SPYMASTER
 		-remove SPYMASTERtoggle afterwards
+		-when entering a room you have to choose if you want to join as SPYMASTER, RED, BLUE, WATCHER?
+	-Might have to be done storing state into a DB?
+		-allows syncing between devices
 -Add notification to switch game to landscape view on mobile
-	-Only support up to 568px width (iPhone 5)
+	-Only support minimum 568px width (iPhone 5)
 
 FUTURE:
 -Add customization to settings

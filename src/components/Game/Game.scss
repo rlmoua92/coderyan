@@ -21,11 +21,11 @@ button.nav-button {
 	border-radius: .25em;
 	margin: .425em;
 	border: 0;
-	background-color: $nav-button-bg-color;
+	background-color: $button-bg-color;
 }
 
 button.nav-button:hover {
-	opacity: .875;
+	background-color: $button-hover-color;
 }
 
 button.nav-button:focus {
