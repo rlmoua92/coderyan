@@ -13,7 +13,7 @@
 .modal-content {
   display: flex;
   background-color: #000;
-  min-height: 150px;
+  min-height: 200px;
   width: 100%;
     max-width: 400px;
     padding: 1em;
@@ -53,6 +53,14 @@
 
 .modal-content-button-container {
   flex-grow: 1;
+}
+
+.modal-content-button {
+  font-size: .75em;
+  padding: .25em 0;
+  margin: 0 .25em;
+  border: 0;
+  border-radius: .25em;
 }
 
 .modal-content-button:hover {

@@ -8,3 +8,13 @@ TODO:
 	-Connect to same "ROOM" on multiple devices
 	-Allows for certain devices to connect as SPYMASTER
 		-remove SPYMASTERtoggle afterwards
+-Add notification to switch game to landscape view on mobile
+	-Only support up to 568px width (iPhone 5)
+
+FUTURE:
+-Add customization to settings
+	-Height (# rows)
+	-Width (# columns)
+	-Timer (How many seconds?)
+	-Win Conditions (How many blocks needed to win)
+	-#Black cards

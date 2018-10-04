@@ -12,6 +12,10 @@ $black-color: #212121;
 $timer-font: 'Orbitron', sans-serif;
 $timer-color: #03a87c;
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	font-family: $font-stack;
 	margin: 0;
