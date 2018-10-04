@@ -6,6 +6,7 @@ import Modal from '../Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Game.scss';
+import { Link } from 'react-router-dom';
 
 const Game = (props) => {
   const {
@@ -30,7 +31,6 @@ const Game = (props) => {
     width,
     timerOn,
     onCardClick,
-    resetGame,
     gameStarted,
     startGame,
     randKey,
@@ -54,9 +54,9 @@ const Game = (props) => {
     {
       gameStarted ? 
       <div className="flex v-align-bottom modal-content-button-container">
-        <button className="modal-content-button flex-50" onClick={resetGame}>
+        <Link className="modal-content-button flex-50" to="/">
           NEW GAME
-        </button>
+        </Link>
         <button className="modal-content-button flex-50" onClick={toggleSettings}>
           RETURN TO GAME
         </button>
@@ -83,9 +83,9 @@ const Game = (props) => {
           <div>RED: {score.red}</div>
           {winner ?
             <div className="nav-button-container">
-              <button className="nav-button" onClick={resetGame}>
+              <Link className="nav-button" to="/">
                 PLAY<br/ >AGAIN
-              </button>
+              </Link>
             </div> :
             useTimer ?
               <Timer 

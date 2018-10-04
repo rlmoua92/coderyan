@@ -1,14 +1,16 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
+import uheprng from 'random-seed';
 import { getRandomInt } from '../../common.js';
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
 
-    const firstPlayer = getRandomInt(0, 100) % 2;
-    
+    this.randKey = this.props.match.url.replace('/','');
+    const gen = uheprng.create(this.randKey);
+    const firstPlayer = gen(100) % 2;
 
     this.state = {
       score: {
@@ -36,7 +38,6 @@ class GameContainer extends Component {
     this.turnEnd = this.turnEnd.bind(this);
     this.gameOver = this.gameOver.bind(this);
     this.checkWin = this.checkWin.bind(this);
-    this.reset = this.reset.bind(this);
 
     this.toggleSettings = this.toggleSettings.bind(this);
     this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
@@ -85,32 +86,6 @@ class GameContainer extends Component {
       this.setState( { winner: 'blue' });
       this.gameOver('BLUE');
     }
-  }
-
-  reset() {
-    const firstPlayer = getRandomInt(0, 100) % 2;
-
-    this.setState({
-      score: {
-        red: 0,
-        blue: 0
-      },
-      isPlayerRed: firstPlayer,
-      winner: null,
-      winConditions: {
-        red: firstPlayer ? 9 : 8,
-        blue: firstPlayer ? 8 : 9
-      },
-      timerOn: false,
-      timerSeconds: 60,
-      gameStarted: false,
-    });
-
-    this.setState(prevState => {
-      return {
-        gameKey: prevState.gameKey + 1
-      }
-    });
   }
 
   toggleSettings() {
@@ -209,12 +184,6 @@ class GameContainer extends Component {
       gameStarted,
     } = this.state;
 
-    const {
-      match,
-    } = this.props;
-
-    const randKey = match.url.replace('/','');
-
     return (
       <Game 
         key={gameKey}
@@ -228,7 +197,6 @@ class GameContainer extends Component {
         width={width}
         gameStarted={gameStarted}
         startGame={this.startGame}
-        resetGame={this.reset}
         onCardClick={this.onCardClick} 
         onEndTurnClick={this.turnEnd} 
         showSettings={showSettings}
@@ -242,7 +210,7 @@ class GameContainer extends Component {
         startTimer={this.startTimer}
         stopTimer={this.stopTimer}
         clearTimer={this.clearTimer}
-        randKey={randKey}
+        randKey={this.randKey}
       />
     );
   }
