@@ -83,7 +83,7 @@ const Game = (props) => {
           <div>RED: {score.red}</div>
           {winner ?
             <div className="nav-button-container">
-              <Link className="nav-button" to="/">
+              <Link className="nav-button button" to="/">
                 PLAY<br/ >AGAIN
               </Link>
             </div> :

@@ -16,18 +16,19 @@
 	text-align: center;
 }
 
-button.nav-button {
+.nav-button {
 	font-size: 1.325em;
 	border-radius: .25em;
+	padding: 0 .125em;
 	margin: .425em;
 	border: 0;
 	background-color: $button-bg-color;
 }
 
-button.nav-button:hover {
+.nav-button:hover {
 	background-color: $button-hover-color;
 }
 
-button.nav-button:focus {
+.nav-button:focus {
 	outline: 0;
 }
