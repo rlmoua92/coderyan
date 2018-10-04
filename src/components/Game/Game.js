@@ -30,7 +30,7 @@ const Game = (props) => {
     width,
     timerOn,
     onCardClick,
-    onResetClick,
+    resetGame,
     gameStarted,
     startGame,
     randKey,
@@ -38,7 +38,7 @@ const Game = (props) => {
   } = props;
 
   const settingsContent = 
-  <div className="flex flex-column">
+  <div className="flex flex-column flex-100">
     <h2>SETTINGS</h2>
     <div className="room-key">
       <label>ROOM KEY: </label>{
@@ -61,12 +61,19 @@ const Game = (props) => {
     </div>
     {
       gameStarted ? 
-        null : 
-        <div className="flex v-align-bottom modal-content-button-container">
-          <button className="modal-content-button" onClick={() => {startGame(); toggleSettings();}}>
-            START GAME
-          </button>
-        </div>
+      <div className="flex v-align-bottom modal-content-button-container">
+        <button className="modal-content-button flex-50" onClick={resetGame}>
+          NEW GAME
+        </button>
+        <button className="modal-content-button flex-50" onClick={toggleSettings}>
+          RETURN TO GAME
+        </button>
+      </div> : 
+      <div className="flex v-align-bottom modal-content-button-container">
+        <button className="modal-content-button flex-50" onClick={() => {startGame(); toggleSettings();}}>
+          START GAME
+        </button>
+      </div>
     }
   </div>;
   const settingsButton = <FontAwesomeIcon icon={faCog} />;
@@ -84,7 +91,7 @@ const Game = (props) => {
           <div>RED: {score.red}</div>
           {winner ?
             <div className="nav-button-container">
-              <button className="nav-button" onClick={onResetClick}>
+              <button className="nav-button" onClick={resetGame}>
                 PLAY<br/ >AGAIN
               </button>
             </div> :

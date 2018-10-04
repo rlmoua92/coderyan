@@ -8,7 +8,6 @@ class GameContainer extends Component {
     super(props);
 
     const firstPlayer = getRandomInt(0, 100) % 2;
-
     const roomKey = getRandomString(5);
 
     this.state = {
@@ -92,6 +91,8 @@ class GameContainer extends Component {
 
   reset() {
     const firstPlayer = getRandomInt(0, 100) % 2;
+    const roomKey = getRandomString(5);
+    console.log(roomKey);
 
     this.setState({
       score: {
@@ -106,6 +107,8 @@ class GameContainer extends Component {
       },
       timerOn: false,
       timerSeconds: 60,
+      gameStarted: false,
+      randKey: roomKey,
     });
 
     this.setState(prevState => {
@@ -231,7 +234,7 @@ class GameContainer extends Component {
         width={width}
         gameStarted={gameStarted}
         startGame={this.startGame}
-        onResetClick={this.reset}
+        resetGame={this.reset}
         onCardClick={this.onCardClick} 
         onEndTurnClick={this.turnEnd} 
         showSettings={showSettings}
