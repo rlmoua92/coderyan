@@ -1,2 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import CardContainer from './CardContainer.js';
+
+export default CardContainer;

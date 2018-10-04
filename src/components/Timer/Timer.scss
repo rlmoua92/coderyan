@@ -1,0 +1,30 @@
+@import '../../common';
+
+.timer-container {
+	padding: 0 1em;
+	text-align: center;
+}
+
+.timer-title {
+	font-size: .75em;
+	margin-bottom: .25em;
+}
+
+.timer-time {
+	font-family: $timer-font;
+	font-size: 2em;
+	color: $timer-color;
+}
+
+.timer-icon {
+	padding: .125em;
+}
+
+.timer-icon:not(.disabled):hover {
+	cursor: pointer;
+	color: $button-hover-color;
+}
+
+.timer-icon.disabled {
+	color: $disabled-color;
+}

@@ -1,2 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import GameContainer from './GameContainer.js';
+
+export default GameContainer;

@@ -1,0 +1,82 @@
+/*Generic*/
+$font-stack: Helvetica, sans-seif;
+$button-hover-color: #bdbdbd;
+$button-bg-color: #e0e0e0;
+$button-text-color: #000;
+$disabled-color: #616161;
+$error-bg-color: #ffcdd2;
+$error-text-color: #b71c1c;
+/*Nav*/
+$nav-bg-color: #212121;
+$nav-text-color: #fff;
+/*Card*/
+$hidden-color: #fff8e1;
+$red-color: #f44336;
+$blue-color: #2196f3;
+$neutral-color: #dce775;
+$black-color: #212121;
+/*Timer*/
+$timer-font: 'Orbitron', sans-serif;
+$timer-color: #03a87c;
+/*Home*/
+$home-bg-color: #000;
+$home-text-color: #fff;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-stack;
+  margin: 0;
+  height: 100vh;
+}
+
+button {
+  background-color: $button-bg-color;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.button {
+  background-color: $button-bg-color;
+  color: $button-text-color;
+  text-decoration: none;
+  border-radius: .25em;
+  text-align: center;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: $button-hover-color;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.v-align-center {
+  align-items: center;
+}
+
+.v-align-bottom {
+  align-items: flex-end;
+}
+
+.flex-100 {
+  flex-basis: 100%;
+}
+
+.flex-50 {
+  flex-basis: 50%;
+}
+
+#root {
+  height: 100%;
+}
