@@ -15,7 +15,9 @@ class Board extends Component {
       timerOn,
       useTimer,
     } = this.props;
+
     let board = [];
+    
     for (let i = 0; i < height; i++) {
       let children = [];
       for (let j = 0; j < width; j++) {

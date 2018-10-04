@@ -18,11 +18,18 @@ function randomWordPicker(randGen, wordList, numWords) {
   return result;
 }
 
-function addMultipleToList(...args) {
+function createColor(count, color) {
+  return {
+    "count": count,
+    "color": color,
+  }
+}
+
+function addColorsToList(...args) {
   let result = []
   for (let i = 0; i < args.length; i++) {
-    for (let j = 0; j < args[i][0]; j++) {
-      result.push(args[i][1]);
+    for (let j = 0; j < args[i].count; j++) {
+      result.push(args[i].color);
     }
   }
   return result;
@@ -34,8 +41,8 @@ function randomWordColorAssociation(randGen, wordList, colorList) {
   }
   let result = [];
   while (wordList.length > 0) {
-    let randWordInd = randGen(0, wordList.length);
-    let randColorInd = randGen(0, colorList.length);
+    let randWordInd = randGen(wordList.length);
+    let randColorInd = randGen(colorList.length);
     result.push({'value': wordList[randWordInd], 'color': colorList[randColorInd]});
     wordList.splice(randWordInd,1);
     colorList.splice(randColorInd,1);
@@ -52,7 +59,7 @@ class BoardContainer extends Component {
     const gen = uheprng.create(this.props.randKey);
 
     const neutralCount = (this.props.height * this.props.width) - 1 - this.props.redTotal - this.props.blueTotal;
-    const cardColors = addMultipleToList([this.props.redTotal,"red"],[this.props.blueTotal,"blue"],[neutralCount,"neutral"],[1,"black"]);
+    const cardColors = addColorsToList(createColor(this.props.redTotal,"red"),createColor(this.props.blueTotal,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
     const randomWords = randomWordPicker(gen, words, this.props.height * this.props.width);
     this.cards = randomWordColorAssociation(gen, randomWords, cardColors);
   }

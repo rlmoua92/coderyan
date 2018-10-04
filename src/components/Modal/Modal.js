@@ -5,21 +5,29 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Modal.scss';
 
 const Modal = (props) => {
+  const {
+    showModal,
+    enableClosing,
+    toggleModal,
+    modalContent,
+    buttonContent,
+  } = props;
+  
   return (
     <div className="modal">
-      {props.showModal ?
+      {showModal ?
         <div className="modal-container">
           <div className="modal-content">
-            {props.enableClosing ?
-              <button className="modal-button" onClick={props.toggleModal}><FontAwesomeIcon icon={faTimes} /></button> :
+            {enableClosing ?
+              <button className="modal-button" onClick={toggleModal}><FontAwesomeIcon icon={faTimes} /></button> :
             null}
-            {props.modalContent}
+            {modalContent}
           </div>
         </div> :
         null
       }
       <div className="modal-button-container">
-        <button className="modal-button" onClick={props.toggleModal}>{props.buttonContent}</button>
+        <button className="modal-button" onClick={toggleModal}>{buttonContent}</button>
       </div>
     </div>
   );

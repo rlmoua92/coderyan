@@ -1,18 +1,7 @@
 import React, { Component }  from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
-import { getRandomInt } from '../../common.js';
-
-function randomString(len) {
-  let result = [];
-  let alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  for (let i = 0; i < len; i ++) {
-    let randInd = getRandomInt(0, alpha.length);
-    let randLetter = alpha[randInd];
-    result.push(randLetter);
-  }
-  return result.join("");
-}
+import { getRandomInt, getRandomString } from '../../common.js';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -20,7 +9,7 @@ class GameContainer extends Component {
 
     const firstPlayer = getRandomInt(0, 100) % 2;
 
-    const roomKey = randomString(5);
+    const roomKey = getRandomString(5);
 
     this.state = {
       score: {
@@ -45,21 +34,24 @@ class GameContainer extends Component {
       randKey: roomKey,
     }
 
-    this.onCardClick = this.onCardClick.bind(this);
+    this.startGame = this.startGame.bind(this);
     this.turnEnd = this.turnEnd.bind(this);
     this.gameOver = this.gameOver.bind(this);
-    this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
     this.checkWin = this.checkWin.bind(this);
-    this.handleTimerChange = this.handleTimerChange.bind(this);
+    this.reset = this.reset.bind(this);
+
     this.toggleSettings = this.toggleSettings.bind(this);
+    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
+    this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
+    this.toggleTimer = this.toggleTimer.bind(this);
+    
     this.timerTick = this.timerTick.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.clearTimer = this.clearTimer.bind(this);
     this.onTimerEnd = this.onTimerEnd.bind(this);
-    this.reset = this.reset.bind(this);
-    this.startGame = this.startGame.bind(this);
-    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
+
+    this.onCardClick = this.onCardClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -68,25 +60,10 @@ class GameContainer extends Component {
     }
   }
 
-  onCardClick(e, value) {
-    const current_player = this.state.isPlayerRed ? 'red' : 'blue';
-    if (value === 'red' || value === 'blue') {
-      this.setState(prevState => {
-        return {
-          score: {
-            ...prevState.score,
-            [value]: prevState.score[value] + 1,
-            }
-        }
-      });
-    }
-    if (value === 'black') {
-      const winner = this.state.isPlayerRed ? 'BLUE' : 'RED';
-      this.gameOver(winner);
-    }
-    if (value !== current_player.toLowerCase()) {
-      this.state.timerOn ? this.clearTimer() : this.turnEnd();
-    }
+  startGame() {
+    this.setState({
+      gameStarted: true,
+    });
   }
 
   turnEnd() {
@@ -97,13 +74,71 @@ class GameContainer extends Component {
     });
   }
 
+  gameOver(value) {
+    this.setState({ winner: value });
+    console.log("Game Over. " + value + " TEAM WINS!")
+  }
+
+  checkWin() {
+    if (this.state.score.red === this.state.winConditions.red) {
+      this.setState( { winner: 'red '});
+      this.gameOver('RED');
+    }
+    if (this.state.score.blue === this.state.winConditions.blue) {
+      this.setState( { winner: 'blue' });
+      this.gameOver('BLUE');
+    }
+  }
+
+  reset() {
+    const firstPlayer = getRandomInt(0, 100) % 2;
+
+    this.setState({
+      score: {
+        red: 0,
+        blue: 0
+      },
+      isPlayerRed: firstPlayer,
+      winner: null,
+      winConditions: {
+        red: firstPlayer ? 9 : 8,
+        blue: firstPlayer ? 8 : 9
+      },
+      timerOn: false,
+      timerSeconds: 60,
+    });
+
+    this.setState(prevState => {
+      return {
+        gameKey: prevState.gameKey + 1
+      }
+    });
+  }
+
+  toggleSettings() {
+    if (this.state.useTimer && this.state.timerOn) {
+      this.stopTimer();
+    }
+    this.setState(prevState => {
+      return {
+        showSettings: !prevState.showSettings
+      }
+    });
+  }
+
+  onRoomKeyChange(e) {
+    this.setState({
+      randKey: e.target.value
+    });
+  }
+
   toggleSpyMaster(e) {
     this.setState({
       isSpyMaster: e.target.checked
     });
   }
 
-  handleTimerChange(e) {
+  toggleTimer(e) {
     this.setState({
       useTimer: e.target.checked
     });
@@ -144,68 +179,25 @@ class GameContainer extends Component {
     clearInterval(this.timerTickInterval);
   }
 
-  toggleSettings() {
-    if (this.state.useTimer && this.state.timerOn) {
-      this.stopTimer();
+  onCardClick(e, value) {
+    const current_player = this.state.isPlayerRed ? 'red' : 'blue';
+    if (value === 'red' || value === 'blue') {
+      this.setState(prevState => {
+        return {
+          score: {
+            ...prevState.score,
+            [value]: prevState.score[value] + 1,
+            }
+        }
+      });
     }
-    this.setState(prevState => {
-      return {
-        showSettings: !prevState.showSettings
-      }
-    });
-  }
-
-  checkWin() {
-    if (this.state.score.red === this.state.winConditions.red) {
-      this.setState( { winner: 'red '});
-      this.gameOver('RED');
+    if (value === 'black') {
+      const winner = this.state.isPlayerRed ? 'BLUE' : 'RED';
+      this.gameOver(winner);
     }
-    if (this.state.score.blue === this.state.winConditions.blue) {
-      this.setState( { winner: 'blue' });
-      this.gameOver('BLUE');
+    if (value !== current_player.toLowerCase()) {
+      this.state.timerOn ? this.clearTimer() : this.turnEnd();
     }
-  }
-
-  startGame() {
-    this.setState({
-      gameStarted: true,
-    });
-  }
-
-  gameOver(value) {
-    this.setState({ winner: value });
-    console.log("Game Over. " + value + " TEAM WINS!")
-  }
-
-  onRoomKeyChange(e) {
-    this.setState({
-      randKey: e.target.value
-    });
-  }
-
-  reset() {
-    const firstPlayer = getRandomInt(0, 100) % 2;
-
-    this.setState({
-      score: {
-        red: 0,
-        blue: 0
-      },
-      isPlayerRed: firstPlayer,
-      winner: null,
-      winConditions: {
-        red: firstPlayer ? 9 : 8,
-        blue: firstPlayer ? 8 : 9
-      },
-      timerOn: false,
-      timerSeconds: 60,
-    });
-
-    this.setState(prevState => {
-      return {
-        gameKey: prevState.gameKey + 1
-      }
-    });
   }
 
   render() {
@@ -228,31 +220,31 @@ class GameContainer extends Component {
 
     return (
       <Game 
+        key={gameKey}
         isPlayerRed={isPlayerRed} 
         isSpyMaster={isSpyMaster}
         score={score} 
+        redTotal={winConditions.red}
+        blueTotal={winConditions.blue}
+        winner={winner}
+        height={height}
+        width={width}
+        gameStarted={gameStarted}
+        startGame={this.startGame}
+        onResetClick={this.reset}
         onCardClick={this.onCardClick} 
         onEndTurnClick={this.turnEnd} 
+        showSettings={showSettings}
+        toggleSettings={this.toggleSettings}
         onSpyMasterClick={this.toggleSpyMaster}
-        winner={winner}
         useTimer={useTimer}
         timerOn={timerOn}
-        handleTimerChange={this.handleTimerChange}
-        onTimerEnd={this.onTimerEnd}
         timerSeconds={timerSeconds}
+        onTimerCheck={this.toggleTimer}
+        onTimerEnd={this.onTimerEnd}
         startTimer={this.startTimer}
         stopTimer={this.stopTimer}
         clearTimer={this.clearTimer}
-        redTotal={winConditions.red}
-        blueTotal={winConditions.blue}
-        height={height}
-        width={width}
-        showSettings={showSettings}
-        toggleSettings={this.toggleSettings}
-        onResetClick={this.reset}
-        key={gameKey}
-        gameStarted={gameStarted}
-        startGame={this.startGame}
         randKey={randKey}
         onRoomKeyChange={this.onRoomKeyChange}
       />

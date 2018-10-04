@@ -24,13 +24,21 @@ class ModalContainer extends Component {
   }
 
   render() {
+    const {
+      showModal,
+      modalContent,
+      buttonContent,
+      toggleModal,
+      enableClosing,
+    } = this.props;
+
     return (
       <Modal 
-        showModal={this.props.showModal} 
-        modalContent={this.props.modalContent}
-        buttonContent={this.props.buttonContent} 
-        toggleModal={this.props.toggleModal} 
-        enableClosing={this.props.enableClosing} />
+        showModal={showModal} 
+        modalContent={modalContent}
+        buttonContent={buttonContent} 
+        toggleModal={toggleModal} 
+        enableClosing={enableClosing} />
     );
   }
 }
