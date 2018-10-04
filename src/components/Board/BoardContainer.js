@@ -10,7 +10,6 @@ function randomWordPicker(randGen, wordList, numWords) {
   let numList = [];
   while (numList.length < numWords) {
     let randNum = randGen(wordList.length);
-    console.log(randNum);
     if (!numList.includes(randNum)) {
       numList.push(randNum);
     }
@@ -50,7 +49,6 @@ class BoardContainer extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.randKey);
     const gen = uheprng.create(this.props.randKey);
 
     const neutralCount = (this.props.height * this.props.width) - 1 - this.props.redTotal - this.props.blueTotal;

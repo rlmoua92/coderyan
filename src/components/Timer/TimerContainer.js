@@ -21,7 +21,6 @@ class TimerContainer extends Component {
     } = this.props;
     return (
       <Timer 
-        timerOn={timerOn} 
         onStartClick={isSpyMaster || timerOn ? null : onStartClick} 
         onStopClick={isSpyMaster || !timerOn ? null : onStopClick} 
         onClearClick={isSpyMaster || !timerOn ? null : onClearClick} 

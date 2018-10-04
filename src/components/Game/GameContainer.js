@@ -45,8 +45,6 @@ class GameContainer extends Component {
       randKey: roomKey,
     }
 
-    this.timerTickInterval;
-
     this.onCardClick = this.onCardClick.bind(this);
     this.turnEnd = this.turnEnd.bind(this);
     this.gameOver = this.gameOver.bind(this);

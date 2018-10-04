@@ -9,7 +9,6 @@ import './Timer.scss';
 const Timer = (props) => {
   const {
     seconds,
-    timerOn,
     onStopClick,
     onClearClick,
     onStartClick
