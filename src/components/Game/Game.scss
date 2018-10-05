@@ -32,3 +32,10 @@
 .nav-button:focus {
 	outline: 0;
 }
+
+.timer-settings {
+	margin-bottom: .25em;
+	input[type="number"] {
+		max-width: 50px;
+	}
+}

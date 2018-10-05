@@ -28,6 +28,7 @@ class GameContainer extends Component {
       showSettings: true,
       timerOn: false,
       timerSeconds: 60,
+      timerMaxSeconds: 60,
       gameKey: 0,
       gameStarted: false,
     }
@@ -40,6 +41,7 @@ class GameContainer extends Component {
     this.toggleSettings = this.toggleSettings.bind(this);
     this.toggleSpyMaster = this.toggleSpyMaster.bind(this);
     this.toggleTimer = this.toggleTimer.bind(this);
+    this.setMaxTimer = this.setMaxTimer.bind(this);
     
     this.timerTick = this.timerTick.bind(this);
     this.startTimer = this.startTimer.bind(this);
@@ -109,6 +111,24 @@ class GameContainer extends Component {
     });
   }
 
+  setMaxTimer(e) {
+    let intValue = parseInt(e.target.value);
+    if (intValue > 0) {
+      this.setState({
+        timerMaxSeconds: intValue,
+      });
+    } else {
+      this.setState({
+        timerMaxSeconds: 1,
+      });
+    }
+    this.setState(prevState => {
+      return {
+        timerSeconds: prevState.timerMaxSeconds
+      }
+    });
+  }
+
   timerTick() {
     this.setState(prevState => {
       return {
@@ -139,7 +159,7 @@ class GameContainer extends Component {
     this.turnEnd();
     this.setState({ 
       timerOn: false,
-      timerSeconds: 60, 
+      timerSeconds: this.state.timerMaxSeconds, 
     });
     clearInterval(this.timerTickInterval);
   }
@@ -178,6 +198,7 @@ class GameContainer extends Component {
       showSettings,
       timerOn,
       timerSeconds,
+      timerMaxSeconds,
       gameKey,
       gameStarted,
     } = this.state;
@@ -203,6 +224,8 @@ class GameContainer extends Component {
         useTimer={useTimer}
         timerOn={timerOn}
         timerSeconds={timerSeconds}
+        timerMaxSeconds={timerMaxSeconds}
+        onTimerMaxChange={this.setMaxTimer}
         onTimerCheck={this.toggleTimer}
         onTimerEnd={this.onTimerEnd}
         startTimer={this.startTimer}

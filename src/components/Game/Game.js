@@ -18,6 +18,8 @@ const Game = (props) => {
     score,
     onTimerEnd,
     timerSeconds,
+    timerMaxSeconds,
+    onTimerMaxChange,
     startTimer,
     stopTimer,
     clearTimer,
@@ -38,11 +40,17 @@ const Game = (props) => {
   const settingsContent = 
   <div className="flex flex-column flex-100">
     <h2>SETTINGS</h2>
-    <div>
+    <div className="timer-settings">
       <label>
         <input type="checkbox" checked={useTimer} onChange={onTimerCheck} />
         Use Timer
       </label>
+      {useTimer ?
+      <div>
+        <input type="number" value={timerMaxSeconds} onChange={onTimerMaxChange} /> seconds
+      </div> : 
+        null
+      }
     </div>
     <div>
       <label>
