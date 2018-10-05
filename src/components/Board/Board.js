@@ -13,6 +13,7 @@ class Board extends Component {
       winner, 
       timerOn,
       useTimer,
+      revealedCards,
     } = this.props;
 
     let board = [];
@@ -21,6 +22,7 @@ class Board extends Component {
       let children = [];
       for (let j = 0; j < width; j++) {
         let card = cards[(i * height) + j]
+        let cardIndex = (i * width) + j;
         children.push(
           <Card 
             key={j} 
@@ -31,6 +33,8 @@ class Board extends Component {
             winner={winner}
             timerOn={timerOn}
             useTimer={useTimer}
+            cardIndex={cardIndex}
+            isHidden={!revealedCards.includes(cardIndex)}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);

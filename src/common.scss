@@ -80,3 +80,19 @@ button:hover {
 #root {
   height: 100%;
 }
+
+.rotate-container {
+  height: 100%;
+  background-color: $home-bg-color;
+  color: $home-text-color;
+  justify-content: space-around;
+
+  .rotate-content {
+    text-align: center;
+
+    .rotate-icon {
+      margin-top: .25em;
+      font-size: 2em;
+    }
+  }
+}

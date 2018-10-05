@@ -35,6 +35,7 @@ const Game = (props) => {
     gameStarted,
     startGame,
     randKey,
+    revealedCards
   } = props;
 
   const settingsContent = 
@@ -121,7 +122,7 @@ const Game = (props) => {
         />
       </div>
       {gameStarted ? 
-        <Board 
+        <Board
           onCardClick={onCardClick} 
           isSpyMaster={isSpyMaster}
           winner={winner}
@@ -132,6 +133,7 @@ const Game = (props) => {
           timerOn={timerOn}
           useTimer={useTimer}
           randKey={randKey}
+          revealedCards={revealedCards}
         /> : null
       }
     </div>

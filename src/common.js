@@ -1,3 +1,7 @@
+import React  from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -15,4 +19,28 @@ function getRandomString(len) {
   return result.join("");
 }
 
-export { getRandomInt, getRandomString };
+const RotateMessage = () => {
+  return (
+    <div className="rotate-container flex v-align-center">
+      <div className="rotate-content">
+        <div className="rotate-text">PLEASE ROTATE YOUR DEVICE</div>
+        <div className="rotate-icon"><FontAwesomeIcon icon={faRedo} /></div>
+      </div>
+    </div>
+  );
+};
+
+const withRotateMessage = (Component) => (props) => {
+  return (
+    window.innerWidth > window.innerHeight || window.innerWidth > 568 ?
+    <Component {...props} /> :
+    <RotateMessage />
+  );
+}
+
+export { 
+  getRandomInt, 
+  getRandomString,
+  RotateMessage,
+  withRotateMessage
+};

@@ -1,6 +1,9 @@
 import React, { Component }  from 'react';
 import Game from './Game.js';
 import uheprng from 'random-seed';
+import { withRotateMessage } from '../../common.js';
+
+const GameWithRotateMessage = withRotateMessage(Game);
 
 class GameContainer extends Component {
   constructor(props) {
@@ -31,6 +34,9 @@ class GameContainer extends Component {
       timerMaxSeconds: 60,
       gameKey: 0,
       gameStarted: false,
+      windowWith: 0,
+      windowHeight: 0,
+      revealedCards: [],
     }
 
     this.startGame = this.startGame.bind(this);
@@ -50,12 +56,27 @@ class GameContainer extends Component {
     this.onTimerEnd = this.onTimerEnd.bind(this);
 
     this.onCardClick = this.onCardClick.bind(this);
+
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidUpdate() {
     if (!this.state.winner) {
       this.checkWin();
     }
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
   }
 
   startGame() {
@@ -112,7 +133,7 @@ class GameContainer extends Component {
   }
 
   setMaxTimer(e) {
-    let intValue = parseInt(e.target.value);
+    let intValue = parseInt(e.target.value, 10);
     if (intValue > 0) {
       this.setState({
         timerMaxSeconds: intValue,
@@ -164,25 +185,33 @@ class GameContainer extends Component {
     clearInterval(this.timerTickInterval);
   }
 
-  onCardClick(e, value) {
+  onCardClick(e, color, index) {
     const current_player = this.state.isPlayerRed ? 'red' : 'blue';
-    if (value === 'red' || value === 'blue') {
+    if (color === 'red' || color === 'blue') {
       this.setState(prevState => {
         return {
           score: {
             ...prevState.score,
-            [value]: prevState.score[value] + 1,
+            [color]: prevState.score[color] + 1,
             }
         }
       });
     }
-    if (value === 'black') {
+    if (color === 'black') {
       const winner = this.state.isPlayerRed ? 'BLUE' : 'RED';
       this.gameOver(winner);
     }
-    if (value !== current_player.toLowerCase()) {
+    if (color !== current_player.toLowerCase()) {
       this.state.timerOn ? this.clearTimer() : this.turnEnd();
     }
+
+    this.setState(prevState => {
+      let prevCards = prevState.revealedCards.slice();
+      prevCards.push(index);
+      return {
+        revealedCards: prevCards
+      }
+    });
   }
 
   render() {
@@ -201,10 +230,13 @@ class GameContainer extends Component {
       timerMaxSeconds,
       gameKey,
       gameStarted,
+      windowWidth,
+      windowHeight,
+      revealedCards
     } = this.state;
 
     return (
-      <Game 
+      <GameWithRotateMessage 
         key={gameKey}
         isPlayerRed={isPlayerRed} 
         isSpyMaster={isSpyMaster}
@@ -232,6 +264,9 @@ class GameContainer extends Component {
         stopTimer={this.stopTimer}
         clearTimer={this.clearTimer}
         randKey={this.randKey}
+        windowWidth={windowWidth}
+        windowHeight={windowHeight}
+        revealedCards={revealedCards}
       />
     );
   }

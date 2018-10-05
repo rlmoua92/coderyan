@@ -4,7 +4,7 @@ import Game from '../Game';
 import { 
   Switch,
   Route,
-} from 'react-router-dom';
+} from 'react-router-dom'
 
 class App extends Component {
   render() {

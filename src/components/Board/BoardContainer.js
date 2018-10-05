@@ -72,6 +72,7 @@ class BoardContainer extends Component {
       winner,
       timerOn,
       useTimer,
+      revealedCards
     } = this.props;
     return (
       <Board 
@@ -83,6 +84,7 @@ class BoardContainer extends Component {
         winner={winner}
         timerOn={timerOn}
         useTimer={useTimer}
+        revealedCards={revealedCards}
       />
     );
   }
