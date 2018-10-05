@@ -2,8 +2,7 @@
 
 .board-row {
   display: flex;
-  width: 99%;
-  margin: .5em auto;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -12,9 +11,10 @@
   flex-basis: 19%;
   text-align: center;
   padding: 1em 1em;
+  margin: .5em;
   border-radius: .25em;
   box-sizing: border-box;
-  height: calc(20vh - 16px - 1em);
+  height: calc(calc(calc(100vh - 75px)/5) - 1em);
   align-items: strech;
   font-size: .5em;
 }
