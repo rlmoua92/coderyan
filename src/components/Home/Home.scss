@@ -4,7 +4,8 @@
   color: $home-text-color;
   background-color: $home-bg-color;
   height: 100%;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .home-content {

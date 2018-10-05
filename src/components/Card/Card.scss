@@ -1,21 +1,29 @@
 @import '../../common';
 
 .board-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .card {
   box-shadow: 1px 1px 1px rgba(0,0,0,.25);
-  flex-basis: 19%;
+  -ms-flex-preferred-size: 19%;
+      flex-basis: 19%;
   text-align: center;
   padding: 1em 1em;
   margin: .5em;
   border-radius: .25em;
   box-sizing: border-box;
   height: calc(calc(calc(100vh - 75px)/5) - 1em);
-  align-items: strech;
+  -webkit-box-align: strech;
+      -ms-flex-align: strech;
+              -ms-grid-row-align: strech;
+          align-items: strech;
   font-size: .5em;
 }
 
@@ -25,6 +33,7 @@
 .card-hidden:hover {
   cursor: pointer;
   opacity: .5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 }
 
 .card-red {

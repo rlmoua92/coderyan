@@ -11,6 +11,8 @@
 }
 
 .modal-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   background-color: #000;
   min-height: 200px;
@@ -20,7 +22,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 
     .modal-button {
       position: absolute;
@@ -52,7 +55,9 @@
 }
 
 .modal-content-button-container {
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .modal-content-button {

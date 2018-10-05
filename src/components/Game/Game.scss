@@ -4,16 +4,21 @@
 	background-color: $nav-bg-color;
 	color: $nav-text-color;
 	padding: .25em 1em;
-	justify-content: space-between;
+	-webkit-box-pack: justify;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
 	max-height: 75px;
 }
 
 .nav-bar > div {
-	flex-basis: 30%;
+	-ms-flex-preferred-size: 30%;
+	    flex-basis: 30%;
 }
 
 .game-stats {
-	justify-content: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 	text-align: center;
 }
 
