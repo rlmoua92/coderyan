@@ -8,12 +8,6 @@ class Board extends Component {
       height, 
       width, 
       cards,
-      onCardClick,
-      isSpyMaster,
-      winner, 
-      timerOn,
-      useTimer,
-      revealedCards,
     } = this.props;
 
     let board = [];
@@ -28,13 +22,7 @@ class Board extends Component {
             key={j} 
             value={card.value} 
             team={card.color} 
-            onCardClick={onCardClick} 
-            isSpyMaster={isSpyMaster} 
-            winner={winner}
-            timerOn={timerOn}
-            useTimer={useTimer}
             cardIndex={cardIndex}
-            isHidden={!revealedCards.includes(cardIndex)}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);

@@ -1,7 +1,7 @@
+import React, { Component } from 'react';
 import Board from './Board.js';
 import wordList from '../../words.json';
 import uheprng from 'random-seed';
-import { connect } from 'react-redux';
 
 const words = wordList.words;
 
@@ -49,21 +49,38 @@ function randomWordColorAssociation(randGen, wordList, colorList) {
   return result;
 }
 
-const mapStateToProps = (state, ownProps) => { 
-  const gen = uheprng.create(ownProps.randKey);
 
-  const neutralCount = (state.gameHeight * state.gameWidth) - 1 - state.winConditions.red - state.winConditions.blue;
-  const cardColors = addColorsToList(createColor(state.winConditions.red,"red"),createColor(state.winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
-  const randomWords = randomWordPicker(gen, words, state.gameHeight * state.gameWidth);
-  const cards = randomWordColorAssociation(gen, randomWords, cardColors);
 
-  return {
-    height: state.gameHeight,
-    width: state.gameWidth,
-    cards: cards,
+class BoardContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    const gen = uheprng.create(this.props.randKey);
+
+    const neutralCount = (this.props.height * this.props.width) - 1 - this.props.redTotal - this.props.blueTotal;
+    const cardColors = addColorsToList(createColor(this.props.redTotal,"red"),createColor(this.props.blueTotal,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
+    const randomWords = randomWordPicker(gen, words, this.props.height * this.props.width);
+    this.cards = randomWordColorAssociation(gen, randomWords, cardColors);
   }
+
+  render() {
+    const { 
+      height, 
+      width,
+    } = this.props;
+    return (
+      <Board 
+        height={height} 
+        width={width} 
+        cards={this.cards} 
+      />
+    );
+  }
+}
+
+BoardContainer.defaultProps = {
+  height: 5,
+  width: 5
 };
 
-export default connect(
-  mapStateToProps
-)(Board);
+export default BoardContainer;
