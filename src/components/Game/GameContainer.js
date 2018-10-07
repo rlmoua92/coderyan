@@ -12,7 +12,8 @@ import {
 
 const GameWithRotateMessage = withRotateMessage(Game);
 
-const mapStateToProps = state => { 
+const mapStateToProps = (state, ownProps) => { 
+  console.log(state);
   return {
     isPlayerRed: state.player,
     isSpyMaster: state.spymaster,
