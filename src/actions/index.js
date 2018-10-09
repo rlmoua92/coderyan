@@ -119,13 +119,15 @@ export const addRevealedCards = (cardIndex, color) => (dispatch, getState) => {
     useTimer,
     timerOn,
     player,
-    score,
+    spymaster,
   } = getState();
-  if (!useTimer || (useTimer && timerOn)) {
+  if ((!useTimer || (useTimer && timerOn)) && !spymaster) {
     dispatch({type: 'ADD_REVEALED_CARDS', cardIndex});
     const current_player = player ? 'red' : 'blue';
     if (color === 'red' || color === 'blue') {
-      dispatch(changeScore(color, score[current_player] + 1));
+      dispatch(changeScore(color, 1));
+      const { score } = getState();
+      dispatch(checkWin(color, score[color]));
     }
     if (color === 'black') {
       dispatch(setWinner(player ? 'BLUE' : 'RED'));
@@ -133,5 +135,12 @@ export const addRevealedCards = (cardIndex, color) => (dispatch, getState) => {
     if (color !== current_player.toLowerCase()) {
       dispatch(clearTimer());
     }
+  }
+};
+
+export const checkWin = (color, score) => (dispatch, getState) => {
+  const { winConditions } = getState();
+  if (score === winConditions[color]) {
+    dispatch(setWinner(color.toUpperCase()));
   }
 };
