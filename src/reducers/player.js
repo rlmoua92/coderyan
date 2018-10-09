@@ -10,8 +10,6 @@ const player = (state, action, roomKey) => {
       const randKey = roomKey ? roomKey : window.location.pathname.replace('/','');
       const gen = uheprng.create(randKey);
       const firstPlayer = gen(100) % 2;
-      console.log(roomKey);
-      console.log(randKey);
       return state ? state : firstPlayer;
 	}
 };

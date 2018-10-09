@@ -114,7 +114,24 @@ export const setWindowHeight = windowHeight => ({
   windowHeight
 });
 
-export const addRevealedCards = cardIndex => ({
-  type: 'ADD_REVEALED_CARDS',
-  cardIndex
-});
+export const addRevealedCards = (cardIndex, color) => (dispatch, getState) => {
+  const {
+    useTimer,
+    timerOn,
+    player,
+    score,
+  } = getState();
+  if (!useTimer || (useTimer && timerOn)) {
+    dispatch({type: 'ADD_REVEALED_CARDS', cardIndex});
+    const current_player = player ? 'red' : 'blue';
+    if (color === 'red' || color === 'blue') {
+      dispatch(changeScore(color, score[current_player] + 1));
+    }
+    if (color === 'black') {
+      dispatch(setWinner(player ? 'BLUE' : 'RED'));
+    }
+    if (color !== current_player.toLowerCase()) {
+      dispatch(clearTimer());
+    }
+  }
+};
