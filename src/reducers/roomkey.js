@@ -5,7 +5,7 @@ const roomKey = (state = getRandomString(5), action) => {
     case 'SET_ROOM_KEY':
       return action.roomKey;
     default:
-      return state;
+      return window.location.pathname === "/" ? state : window.location.pathname.replace('/','');
   }
 };
 

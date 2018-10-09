@@ -55,6 +55,26 @@ export const toggleTimerOn = () => ({
 	type: 'TOGGLE_TIMER_ON'
 });
 
+let timer = null;
+
+export const startTimer = () => (dispatch) => {
+  // clearInterval(timer);
+  // timer = setInterval(() => dispatch(timerTick()), 1000);
+  // dispatch({ type: 'TIMER_START' });
+  // dispatch(timerTick())
+};
+
+export const timerTick = () => ({
+	type: 'TIMER_TICK'
+});
+
+export const stopTimer = () => {
+	clearInterval(timer);
+	return ({
+		type: 'TIMER_STOP'
+	});
+};
+
 export const setTimerSeconds = seconds => ({
 	type: 'SET_TIMER_SECONDS',
 	seconds

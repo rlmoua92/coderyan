@@ -28,7 +28,7 @@ const rootReducer = (state = {}, action) => {
     player: player(state, action),
     timerOn: timerOn(state.timerOn, action),
     timerMaxSeconds: timerMaxSeconds(state.timerMaxSeconds, action),
-    timerSeconds: timerSeconds(state.timerSeconds, action),
+    timerSeconds: timerSeconds(state, action),
     useTimer: useTimer(state.useTimer, action),
     windowWidth: windowWidth(state.windowWidth, action),
     windowHeight: windowHeight(state.windowHeight, action),
