@@ -31,7 +31,7 @@ const Timer = (props) => {
     <div className="timer-container">
       <div className="timer">
         <div className="timer-title">TIME</div>
-        <div className="timer-time">{seconds}</div>
+        <div className="timer-time">{seconds ? seconds : "--"}</div>
       </div>
       <div className="controlIcons">
         <FontAwesomeIcon icon={faPlay} onClick={onStartClick} className={iconStartClass} />   

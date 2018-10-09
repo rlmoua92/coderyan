@@ -111,10 +111,14 @@ export const setTimerSeconds = seconds => ({
   seconds
 });
 
-export const setTimerMaxSeconds = (maxSeconds) => ({
-  type: 'SET_TIMER_MAX_SECONDS',
-  maxSeconds
-});
+export const setTimerMaxSeconds = (maxSeconds) => (dispatch) => {
+  if (maxSeconds > 0) {
+    dispatch({type: 'SET_TIMER_MAX_SECONDS', maxSeconds});
+  } else {
+    dispatch({type: 'SET_TIMER_MAX_SECONDS', maxSeconds: 1});
+  }
+  dispatch(setTimerSeconds(maxSeconds));
+};
 
 export const setGameStarted = gameStarted => ({
   type: 'SET_GAME_STARTED',
