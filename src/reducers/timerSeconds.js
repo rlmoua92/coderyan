@@ -1,11 +1,11 @@
-const timerSeconds = (state = {}, action) => {
+const timerSeconds = (state = 60, action, timerOn) => {
 	switch (action.type) {
 		case 'SET_TIMER_SECONDS':
-			return action.timerSeconds;
+			return action.seconds;
 		case 'TIMER_TICK':
-			return state.timerOn ? state.timerSeconds - 1 : action.timerSeconds;
+			return timerOn ? state - 1 : null;
     	default:
-      		return state.timerSeconds;
+      		return state;
 	}
 };
 
