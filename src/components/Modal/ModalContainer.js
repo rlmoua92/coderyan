@@ -1,6 +1,9 @@
 import Modal from './Modal.js';
 import { connect } from 'react-redux';
-import { toggleSettings } from '../../actions';
+import { 
+  toggleSettings,
+  modalClick,
+} from '../../actions';
 
 const mapStateToProps = (state, ownProps) => { 
   return {
@@ -13,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   toggleModal: () => dispatch(toggleSettings()),
+  onModalClick: (e) => dispatch(modalClick(e)),
 });
 
 

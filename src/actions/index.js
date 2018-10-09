@@ -47,9 +47,26 @@ export const setWidth = width => ({
   width
 });
 
-export const toggleSettings = () => ({
-  type: 'TOGGLE_SETTINGS'
-});
+export const toggleSettings = () => (dispatch, getState) => {
+  const {
+    timerOn,
+    settings,
+  } = getState();
+  if (!settings && timerOn) {
+    dispatch(stopTimer());
+  }
+  dispatch({type: 'TOGGLE_SETTINGS'});
+};
+
+export const modalClick = (e) => (dispatch, getState) => {
+  const {
+    settings,
+    gameStarted,
+  } = getState();
+  if(settings && e.target.className === "modal-container" && gameStarted) {
+    dispatch(toggleSettings());
+  }
+};
 
 export const setTimerOn = (timerOn) => ({
   type: 'SET_TIMER_ON',
