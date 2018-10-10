@@ -75,9 +75,16 @@ export const setTimerOn = (timerOn) => ({
 
 let timer = null;
 
-export const timerTick = () => ({
-  type: 'TIMER_TICK'
-});
+export const timerTick = () => (dispatch, getState) => {
+  const {
+    timerSeconds
+  } = getState();
+  if (timerSeconds > 0) {
+    dispatch({type: 'TIMER_TICK'});
+  } else {
+    dispatch(clearTimer());
+  }
+};
 
 export const startTimer = () => (dispatch, getState) => {
   const { timerOn } = getState();
@@ -135,15 +142,21 @@ export const setWindowHeight = windowHeight => ({
   windowHeight
 });
 
-export const addRevealedCards = (cardIndex, color) => (dispatch, getState) => {
+export const addRevealedCards = (cardIndex) => ({
+  type: 'ADD_REVEALED_CARDS', 
+  cardIndex
+});
+
+export const cardClick = (cardIndex, color) => (dispatch, getState) => {
   const {
     useTimer,
     timerOn,
     player,
     spymaster,
+    winner,
   } = getState();
-  if ((!useTimer || (useTimer && timerOn)) && !spymaster) {
-    dispatch({type: 'ADD_REVEALED_CARDS', cardIndex});
+  if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
+    dispatch(addRevealedCards(cardIndex));
     const current_player = player ? 'red' : 'blue';
     if (color === 'red' || color === 'blue') {
       dispatch(changeScore(color, 1));
@@ -154,7 +167,11 @@ export const addRevealedCards = (cardIndex, color) => (dispatch, getState) => {
       dispatch(setWinner(player ? 'BLUE' : 'RED'));
     }
     if (color !== current_player.toLowerCase()) {
-      dispatch(clearTimer());
+      if (useTimer) {
+        dispatch(clearTimer());
+      } else {
+        dispatch(togglePlayer());
+      }
     }
   }
 };

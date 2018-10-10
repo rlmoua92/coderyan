@@ -1,6 +1,6 @@
 import Card from './Card.js';
 import { connect } from 'react-redux';
-import { addRevealedCards } from '../../actions';
+import { cardClick } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => { 
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(addRevealedCards(ownProps.cardIndex, ownProps.team)),
+  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team)),
 });
 
 
