@@ -1,3 +1,12 @@
+import {
+  randomWordPicker,
+  createColor,
+  addColorsToList,
+  randomWordColorAssociation,
+} from '../common.js';
+import wordList from '../words.json';
+import uheprng from 'random-seed';
+
 export const setRoomKey = roomKey => ({
   type: 'SET_ROOM_KEY',
   roomKey
@@ -147,10 +156,43 @@ export const windowResize = (windowWidth, windowHeight) => (dispatch) => {
   dispatch(setWindowHeight(windowHeight));
 };
 
-export const addRevealedCards = (cardIndex) => ({
-  type: 'ADD_REVEALED_CARDS', 
+let newCardIndex = 0;
+export const addCard = (value, team) => ({
+  type: 'ADD_CARD',
+  value,
+  team,
+  cardIndex: newCardIndex++,
+});
+
+export const revealCard = (cardIndex) => ({
+  type: 'REVEAL_CARD', 
   cardIndex
 });
+
+const words = wordList.words;
+export const initializeBoard = () => (dispatch, gameState) => {
+  const { 
+    roomKey,
+    gameHeight,
+    gameWidth,
+    winConditions,
+
+  } = gameState();
+  const gen = uheprng.create(roomKey);
+
+  const neutralCount = (gameHeight * gameWidth) - 1 - winConditions.red - winConditions.blue;
+  const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
+  const randomWords = randomWordPicker(gen, words, gameHeight * gameWidth);
+  const cards = randomWordColorAssociation(gen, randomWords, cardColors);
+  for (let i = 0; i < cards.length; i++) {
+    dispatch(addCard(cards[i].value, cards[i].color, i));
+  }
+};
+
+export const startGame = () => (dispatch, gameState) => {
+  dispatch(initializeBoard());
+  dispatch(setGameStarted(true));
+};
 
 export const cardClick = (cardIndex, color) => (dispatch, getState) => {
   const {
@@ -161,7 +203,7 @@ export const cardClick = (cardIndex, color) => (dispatch, getState) => {
     winner,
   } = getState();
   if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
-    dispatch(addRevealedCards(cardIndex));
+    dispatch(revealCard(cardIndex));
     const current_player = player ? 'red' : 'blue';
     if (color === 'red' || color === 'blue') {
       dispatch(changeScore(color, 1));

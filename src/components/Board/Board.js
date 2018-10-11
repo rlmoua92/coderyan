@@ -16,13 +16,13 @@ class Board extends Component {
       let children = [];
       for (let j = 0; j < width; j++) {
         let card = cards[(i * height) + j]
-        let cardIndex = (i * width) + j;
         children.push(
           <Card 
             key={j} 
             value={card.value} 
-            team={card.color} 
-            cardIndex={cardIndex}
+            team={card.team} 
+            cardIndex={card.cardIndex}
+            isHidden={card.isHidden}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);

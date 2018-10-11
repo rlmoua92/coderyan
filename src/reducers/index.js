@@ -1,7 +1,7 @@
 import gameWidth from './gameWidth';
 import gameHeight from './gameHeight';
 import gameStarted from './gameStarted';
-import revealedCards from './revealedCards';
+import cards from './cards';
 import roomKey from './roomkey';
 import score from './score';
 import settings from './settings';
@@ -20,7 +20,7 @@ const rootReducer = (state = {}, action) => {
   return {
     gameWidth: gameWidth(state.gameWidth, action),
     gameHeight: gameHeight(state.gameHeight, action),
-    revealedCards: revealedCards(state.revealedCards, action, state.timerOn, state.useTimer),
+    cards: cards(state.cards, action),
     roomKey: roomKey(state.roomKey, action),
     score: score(state.score, action),
     settings: settings(state.settings, action),

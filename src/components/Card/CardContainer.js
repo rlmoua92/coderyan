@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     value: ownProps.value,
     isSpyMaster: state.spymaster,
     team: ownProps.team,
-    isHidden: !state.revealedCards.includes(ownProps.cardIndex),
+    isHidden: ownProps.isHidden,
   }
 };
 

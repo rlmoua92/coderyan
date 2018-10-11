@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { 
   togglePlayer,
   toggleSettings,
-  setGameStarted,
+  startGame,
   toggleSpymaster,
   setTimerMaxSeconds,
   toggleUseTimer,
@@ -30,7 +30,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   onEndTurnClick: () => dispatch(togglePlayer()),
   toggleSettings: () => dispatch(toggleSettings()),
-  startGame: () => dispatch(setGameStarted(true)),
+  startGame: () => dispatch(startGame()),
   onSpyMasterClick: () => dispatch(toggleSpymaster()),
   onTimerMaxChange: (e) => dispatch(setTimerMaxSeconds(e.target.value)),
   onTimerCheck: () => dispatch(toggleUseTimer()),
