@@ -10,12 +10,13 @@ const Modal = (props) => {
     toggleModal,
     modalContent,
     buttonContent,
+    onModalClick
   } = props;
   
   return (
     <div className="modal">
       {showModal ?
-        <div className="modal-container">
+        <div className="modal-container" onClick={onModalClick}>
           <div className="modal-content">
             {enableClosing ?
               <button className="modal-button" onClick={toggleModal}><FontAwesomeIcon icon={faTimes} /></button> :

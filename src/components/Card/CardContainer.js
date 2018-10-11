@@ -1,35 +1,22 @@
-import React, { Component }  from 'react';
 import Card from './Card.js';
+import { connect } from 'react-redux';
+import { cardClick } from '../../actions';
 
-class CardContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onClick = this.onClick.bind(this);
+const mapStateToProps = (state, ownProps) => { 
+  return {
+    value: ownProps.value,
+    isSpyMaster: state.spymaster,
+    team: ownProps.team,
+    isHidden: !state.revealedCards.includes(ownProps.cardIndex),
   }
-
-  onClick(e) {
-    if (this.props.isHidden && !this.props.winner && !this.props.isSpyMaster && ((this.props.useTimer && this.props.timerOn) || !this.props.useTimer)) {
-      this.props.onCardClick(e, this.props.team, this.props.cardIndex);
-    }
-  }
-
-  render() {
-    const { value, team, isSpyMaster, isHidden } = this.props;
-    return (
-      <Card 
-        value={value} 
-        isHidden={isHidden} 
-        team={team} 
-        isSpyMaster={isSpyMaster}
-        onClick={this.onClick}
-      />
-    );
-  }
-}
-
-CardContainer.defaultProps = {
-  value: "Card"
 };
 
-export default CardContainer;
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team)),
+});
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Card);

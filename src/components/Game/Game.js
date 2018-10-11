@@ -16,26 +16,13 @@ const Game = (props) => {
     winner,
     isPlayerRed,
     score,
-    onTimerEnd,
-    timerSeconds,
     timerMaxSeconds,
     onTimerMaxChange,
-    startTimer,
-    stopTimer,
-    clearTimer,
     onEndTurnClick,
-    showSettings,
     toggleSettings,
-    redTotal,
-    blueTotal,
-    height,
-    width,
-    timerOn,
-    onCardClick,
     gameStarted,
     startGame,
     randKey,
-    revealedCards
   } = props;
 
   const settingsContent = 
@@ -96,15 +83,7 @@ const Game = (props) => {
               </Link>
             </div> :
             useTimer ?
-              <Timer 
-                timerOn={timerOn}
-                onTimerEnd={onTimerEnd} 
-                seconds={timerSeconds}
-                onStartClick={startTimer}
-                onStopClick={stopTimer}
-                onClearClick={clearTimer}
-                isSpyMaster={isSpyMaster}
-              /> :
+              <Timer /> :
               <div className="nav-button-container">
                 <button className="nav-button" onClick={onEndTurnClick}>
                   END<br/ >TURN
@@ -114,26 +93,13 @@ const Game = (props) => {
           <div>BLUE: {score.blue}</div>
         </div>
         <Modal 
-          showModal={showSettings} 
           modalContent={settingsContent}
           buttonContent={settingsButton}
-          toggleModal={toggleSettings}
-          enableClosing={gameStarted}
         />
       </div>
       {gameStarted ? 
         <Board
-          onCardClick={onCardClick} 
-          isSpyMaster={isSpyMaster}
-          winner={winner}
-          redTotal={redTotal}
-          blueTotal={blueTotal}
-          height={height}
-          width={width}
-          timerOn={timerOn}
-          useTimer={useTimer}
           randKey={randKey}
-          revealedCards={revealedCards}
         /> : null
       }
     </div>

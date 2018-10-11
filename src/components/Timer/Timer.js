@@ -8,6 +8,7 @@ import './Timer.scss';
 const Timer = (props) => {
   const {
     seconds,
+    timerOn,
     onStopClick,
     onClearClick,
     onStartClick
@@ -15,22 +16,22 @@ const Timer = (props) => {
 
   const iconStartClass = classNames(
     'timer-icon',
-    { 'disabled': !onStartClick },
+    { 'disabled': timerOn },
   );
   const iconStopClass = classNames(
     'timer-icon',
-    { 'disabled': !onStopClick },
+    { 'disabled': !timerOn },
   );
   const iconClearClass = classNames(
     'timer-icon',
-    { 'disabled': !onClearClick },
+    { 'disabled': !timerOn },
   );
 
   return (
     <div className="timer-container">
       <div className="timer">
         <div className="timer-title">TIME</div>
-        <div className="timer-time">{seconds}</div>
+        <div className="timer-time">{seconds ? seconds : "--"}</div>
       </div>
       <div className="controlIcons">
         <FontAwesomeIcon icon={faPlay} onClick={onStartClick} className={iconStartClass} />   

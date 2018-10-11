@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
 import Timer from './Timer.js';
 import './Timer.scss';
+import { connect } from 'react-redux';
+import { 
+	startTimer,
+	stopTimer,
+	clearTimer,
+} from '../../actions';
 
-class TimerContainer extends Component {
-  componentDidUpdate() {
-    if (this.props.seconds <= 0) {
-      this.props.onTimerEnd();
-    }
+const mapStateToProps = (state, ownProps) => { 
+  return {
+    seconds: state.timerSeconds,
+    timerOn: state.timerOn,
   }
+};
 
-  render() {
-    const {
-      timerOn,
-      onStartClick,
-      onStopClick,
-      onClearClick,
-      seconds,
-      isSpyMaster
-    } = this.props;
-    return (
-      <Timer 
-        onStartClick={isSpyMaster || timerOn ? null : onStartClick} 
-        onStopClick={isSpyMaster || !timerOn ? null : onStopClick} 
-        onClearClick={isSpyMaster || !timerOn ? null : onClearClick} 
-        seconds={seconds}
-      />
-    );
-  }
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onStartClick: () => dispatch(startTimer()),
+  onStopClick: () => dispatch(stopTimer()),
+  onClearClick: () => dispatch(clearTimer()),
+});
 
-export default TimerContainer;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Timer);
