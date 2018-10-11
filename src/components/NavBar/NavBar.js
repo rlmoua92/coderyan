@@ -5,7 +5,7 @@ const NavBar = (props) => {
   const {
     leftContent,
     centerContent,
-    rightContent
+    rightContent,
   } = props;
 
   return (

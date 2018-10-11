@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     showModal: state.settings,
     modalContent: ownProps.modalContent,
     buttonContent: ownProps.buttonContent,
-    enableClosing: state.gameStarted,
+    enableClosing: state.gameStarted || window.location.pathname === "/",
   }
 };
 

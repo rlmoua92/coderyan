@@ -56,6 +56,11 @@ export const setWidth = width => ({
   width
 });
 
+export const setSettings = settings => ({
+  type: 'SET_SETTINGS',
+  settings
+});
+
 export const toggleSettings = () => (dispatch, getState) => {
   const {
     timerOn,
@@ -72,7 +77,7 @@ export const modalClick = (e) => (dispatch, getState) => {
     settings,
     gameStarted,
   } = getState();
-  if(settings && e.target.className === "modal-container" && gameStarted) {
+  if(settings && e.target.className === "modal-container" && (gameStarted || window.location.pathname === "/")) {
     dispatch(toggleSettings());
   }
 };
@@ -187,6 +192,11 @@ export const initializeBoard = () => (dispatch, gameState) => {
   for (let i = 0; i < cards.length; i++) {
     dispatch(addCard(cards[i].value, cards[i].color, i));
   }
+};
+
+export const homeStartGame = () => (dispatch, gameState) => {
+  dispatch(setSettings(true));
+  dispatch(setGameStarted(false));
 };
 
 export const startGame = () => (dispatch, gameState) => {

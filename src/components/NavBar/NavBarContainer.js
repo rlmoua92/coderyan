@@ -5,7 +5,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     leftContent: ownProps.leftContent,
     centerContent: ownProps.centerContent,
-    rightContent: ownProps.rightContent
+    rightContent: ownProps.rightContent,
   }
 };
 

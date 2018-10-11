@@ -3,7 +3,7 @@
 .home {
   color: $home-text-color;
   background-color: $home-bg-color;
-  height: 100%;
+  flex-grow: 1;
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
