@@ -9,15 +9,14 @@ import configureStore from './store/ConfigureStore';
 import { getRandomString } from './common.js';
 import { windowResize } from './actions';
 
-const roomKey = window.location.pathname === "/" ? getRandomString(5) : window.location.pathname.replace(/\/(.*?)\//,'$1-').replace('/','');
-const initialState = { roomKey };
+const roomKey = (window.location.pathname === "/" ? getRandomString(5) : window.location.pathname.replace(/\/(.*?)\//,'').replace('/',''));
+const gameType = "cn";
+const initialState = { roomKey, gameType };
 const store = configureStore(initialState);
 
 window.addEventListener('resize', () => {
 	store.dispatch(windowResize(window.innerWidth, window.innerHeight));
 });
-
-console.log(roomKey);
 
 ReactDOM.render(
   <Provider store={store}>

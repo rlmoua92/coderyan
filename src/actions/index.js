@@ -7,9 +7,8 @@ import {
 import wordList from '../words.json';
 import uheprng from 'random-seed';
 
-export const setRoomKey = roomKey => ({
+export const setRoomKey = (roomKey) => ({
   type: 'SET_ROOM_KEY',
-  roomKey
 });
 
 export const setGameType = gameType => ({
@@ -179,16 +178,26 @@ export const revealCard = (cardIndex) => ({
   cardIndex
 });
 
-const words = wordList.words;
 export const initializeBoard = () => (dispatch, gameState) => {
   const { 
     roomKey,
+    gameType,
     gameHeight,
     gameWidth,
     winConditions,
 
   } = gameState();
-  const gen = uheprng.create(roomKey);
+
+  let words = [];
+  if (gameType === "cn") {
+    words = wordList.words;
+  } else if (gameType === "dt") {
+
+  } else if (gameType === "ud") {
+
+  }
+
+  const gen = uheprng.create(gameType + '-' + roomKey);
 
   const neutralCount = (gameHeight * gameWidth) - 1 - winConditions.red - winConditions.blue;
   const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));

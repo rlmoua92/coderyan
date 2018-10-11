@@ -53,9 +53,7 @@ const Game = (props) => {
     <div>
       <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} />
       {gameStarted ? 
-        <Board
-          randKey={randKey}
-        /> : null
+        <Board /> : null
       }
     </div>
   );

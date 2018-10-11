@@ -6,6 +6,7 @@ import {
  } from '../../actions';
 
 const mapStateToProps = state => { 
+  console.log(state);
   return {
     randKey: state.roomKey,
     gameType: state.gameType,
