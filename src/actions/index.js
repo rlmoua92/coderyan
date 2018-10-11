@@ -142,6 +142,11 @@ export const setWindowHeight = windowHeight => ({
   windowHeight
 });
 
+export const windowResize = (windowWidth, windowHeight) => (dispatch) => {
+  dispatch(setWindowWidth(windowWidth));
+  dispatch(setWindowHeight(windowHeight));
+};
+
 export const addRevealedCards = (cardIndex) => ({
   type: 'ADD_REVEALED_CARDS', 
   cardIndex
