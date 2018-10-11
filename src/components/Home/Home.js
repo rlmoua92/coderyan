@@ -9,9 +9,8 @@ const Home = (props) => {
     randKey,
     onRoomKeyChange,
     onStartGame,
+    gameType,
   } = props;
-
-  const roomType = "cn";
 
   const rightContent = 
   <div className="nav-settings">
@@ -29,7 +28,7 @@ const Home = (props) => {
             <input type="text" value={randKey} onChange={onRoomKeyChange} />
             {randKey.length <= 0 ? <div className="input-error">ERROR: KEY CANNOT BE BLANK</div> : null}
           </div>
-          <Link to={"/" + roomType + "/" + randKey} className="button flex-100" onClick={onStartGame}>START GAME</Link>
+          <Link to={"/" + gameType + "/" + randKey} className="button flex-100" onClick={onStartGame}>START GAME</Link>
         </div>
       </div>
     </div>

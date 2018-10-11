@@ -3,6 +3,7 @@ import gameHeight from './gameHeight';
 import gameStarted from './gameStarted';
 import cards from './cards';
 import roomKey from './roomkey';
+import gameType from './gameType';
 import score from './score';
 import settings from './settings';
 import spymaster from './spymaster';
@@ -22,6 +23,7 @@ const rootReducer = (state = {}, action) => {
     gameHeight: gameHeight(state.gameHeight, action),
     cards: cards(state.cards, action),
     roomKey: roomKey(state.roomKey, action),
+    gameType: gameType(state.gameType, action),
     score: score(state.score, action),
     settings: settings(state.settings, action),
     spymaster: spymaster(state.spymaster, action),

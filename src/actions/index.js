@@ -12,6 +12,11 @@ export const setRoomKey = roomKey => ({
   roomKey
 });
 
+export const setGameType = gameType => ({
+  type: 'SET_GAME_TYPE',
+  gameType
+});
+
 export const changeScore = (team, amount) => ({
   type: 'CHANGE_SCORE',
   team,

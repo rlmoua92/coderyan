@@ -8,6 +8,7 @@ import {
 const mapStateToProps = state => { 
   return {
     randKey: state.roomKey,
+    gameType: state.gameType,
   }
 };
 

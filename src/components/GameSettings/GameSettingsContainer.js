@@ -6,6 +6,7 @@ import {
   toggleSpymaster,
   setTimerMaxSeconds,
   toggleUseTimer,
+  setGameType,
 } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => { 
@@ -14,7 +15,8 @@ const mapStateToProps = (state, ownProps) => {
     gameStarted: state.gameStarted,
     useTimer: state.useTimer,
     timerMaxSeconds: state.timerMaxSeconds,
-    isHome: window.location.pathname === "/"
+    isHome: window.location.pathname === "/",
+    gameType: state.gameType,
   }
 };
 
@@ -24,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
   onSpyMasterClick: () => dispatch(toggleSpymaster()),
   onTimerMaxChange: (e) => dispatch(setTimerMaxSeconds(e.target.value)),
   onTimerCheck: () => dispatch(toggleUseTimer()),
+  onGameTypeChange: (e) => dispatch(setGameType(e.target.value)),
 });
 
 
