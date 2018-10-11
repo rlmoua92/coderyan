@@ -8,6 +8,8 @@ const Home = (props) => {
     onRoomKeyChange
   } = props;
 
+  const roomType = "cn";
+
   return (
     <div className="home flex v-align-center">
       <div className="home-content flex flex-column">
@@ -17,7 +19,7 @@ const Home = (props) => {
           <input type="text" value={randKey} onChange={onRoomKeyChange} />
           {randKey.length <= 0 ? <div className="input-error">ERROR: KEY CANNOT BE BLANK</div> : null}
         </div>
-        <Link to={"/" + randKey} className="button flex-100">START GAME</Link>
+        <Link to={"/" + roomType + "/" + randKey} className="button flex-100">START GAME</Link>
       </div>
     </div>
   );

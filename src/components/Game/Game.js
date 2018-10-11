@@ -2,6 +2,7 @@ import React from 'react';
 import Board from '../Board';
 import Timer from '../Timer';
 import Modal from '../Modal';
+import NavBar from '../NavBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Game.scss';
@@ -64,39 +65,45 @@ const Game = (props) => {
     }
   </div>;
   const settingsButton = <FontAwesomeIcon icon={faCog} />;
+
+  const leftContent = 
+    <div>
+      <div className="room">ROOM: {randKey}</div>
+      {winner ? 
+        <div className="winner">WINNER: {winner}</div> :
+        <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>
+      }
+    </div>
+  const centerContent = 
+    <div className="game-stats flex v-align-center">
+      <div>RED: {score.red}</div>
+      {winner ?
+        <div className="nav-button-container">
+          <Link className="nav-button button" to="/">
+            PLAY<br/ >AGAIN
+          </Link>
+        </div> :
+        useTimer ?
+          <Timer /> :
+          <div className="nav-button-container">
+            <button className="nav-button" onClick={onEndTurnClick}>
+              END<br/ >TURN
+            </button>
+          </div>
+      }
+      <div>BLUE: {score.blue}</div>
+    </div>;
+  const rightContent = 
+    <div className="nav-settings">
+      <Modal
+        modalContent={settingsContent}
+        buttonContent={settingsButton}
+      />
+    </div>;
+
   return (
     <div>
-      <div className="nav-bar flex v-align-center">
-        <div>
-          <div className="room">ROOM: {randKey}</div>
-          {winner ? 
-            <div className="winner">WINNER: {winner}</div> :
-            <div className="player">TURN: {isPlayerRed ? "RED" : "BLUE"}</div>
-          }
-        </div>
-        <div className="game-stats flex v-align-center">
-          <div>RED: {score.red}</div>
-          {winner ?
-            <div className="nav-button-container">
-              <Link className="nav-button button" to="/">
-                PLAY<br/ >AGAIN
-              </Link>
-            </div> :
-            useTimer ?
-              <Timer /> :
-              <div className="nav-button-container">
-                <button className="nav-button" onClick={onEndTurnClick}>
-                  END<br/ >TURN
-                </button>
-              </div>
-          }
-          <div>BLUE: {score.blue}</div>
-        </div>
-        <Modal 
-          modalContent={settingsContent}
-          buttonContent={settingsButton}
-        />
-      </div>
+      <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} />
       {gameStarted ? 
         <Board
           randKey={randKey}
@@ -104,6 +111,6 @@ const Game = (props) => {
       }
     </div>
   );
-}
+};
 
 export default Game;

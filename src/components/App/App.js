@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/:roomkey" exact component={Game} />
+        <Route path="/:roomType/:roomkey" exact component={Game} />
         <Route render={() => {return <h1>This page doesn't exist.</h1>;}} />
       </Switch>
     );
