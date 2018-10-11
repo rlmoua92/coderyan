@@ -7,8 +7,7 @@ const player = (state, action, roomKey) => {
 		case 'SET_PLAYER':
 			return action.player;
     default:
-      const randKey = roomKey ? roomKey : window.location.pathname.replace('/','');
-      const gen = uheprng.create(randKey);
+      const gen = uheprng.create(roomKey);
       const firstPlayer = gen(100) % 2;
       return state ? state : firstPlayer;
 	}

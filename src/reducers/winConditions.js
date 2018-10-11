@@ -5,8 +5,7 @@ const winConditions = (state, action, roomKey) => {
 		case 'SET_WIN_CONDITIONS':
 			return {"red": action.redWin, "blue": action.blueWin};
     default:
-    	const randKey = roomKey ? roomKey : window.location.pathname.replace('/','');
-      const gen = uheprng.create(randKey);
+      const gen = uheprng.create(roomKey);
       const firstPlayer = gen(100) % 2;
       return state ? state : {"red": firstPlayer ? 9 : 8, "blue": firstPlayer ? 8 : 9};
 	}

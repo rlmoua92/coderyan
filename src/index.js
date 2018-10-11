@@ -6,8 +6,10 @@ import './common.scss';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/ConfigureStore';
+import { getRandomString } from './common.js';
 
-const store = configureStore();
+const roomKey = window.location.pathname === "/" ? getRandomString(5) : window.location.pathname.replace('/','');
+const store = configureStore({roomKey: roomKey});
 
 ReactDOM.render(
   <Provider store={store}>
