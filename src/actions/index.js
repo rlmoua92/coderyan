@@ -167,11 +167,7 @@ export const cardClick = (cardIndex, color) => (dispatch, getState) => {
       dispatch(setWinner(player ? 'BLUE' : 'RED'));
     }
     if (color !== current_player.toLowerCase()) {
-      if (useTimer) {
-        dispatch(clearTimer());
-      } else {
-        dispatch(togglePlayer());
-      }
+      useTimer ? dispatch(clearTimer()) : dispatch(togglePlayer());
     }
   }
 };
