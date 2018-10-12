@@ -11,20 +11,21 @@ const Timer = (props) => {
     timerOn,
     onStopClick,
     onClearClick,
-    onStartClick
+    onStartClick,
+    isSpymaster
   } = props;
 
   const iconStartClass = classNames(
     'timer-icon',
-    { 'disabled': timerOn },
+    { 'disabled': timerOn || isSpymaster },
   );
   const iconStopClass = classNames(
     'timer-icon',
-    { 'disabled': !timerOn },
+    { 'disabled': !timerOn || isSpymaster },
   );
   const iconClearClass = classNames(
     'timer-icon',
-    { 'disabled': !timerOn },
+    { 'disabled': !timerOn || isSpymaster },
   );
 
   return (

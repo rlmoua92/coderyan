@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     seconds: state.timerSeconds,
     timerOn: state.timerOn,
+    isSpymaster: state.spymaster,
   }
 };
 

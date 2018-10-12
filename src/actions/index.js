@@ -107,8 +107,11 @@ export const timerTick = () => (dispatch, getState) => {
 };
 
 export const startTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (!timerOn) {
+  const { 
+    timerOn,
+    spymaster,
+  } = getState();
+  if (!timerOn && !spymaster) {
     timer = setInterval(() => dispatch(timerTick()), 1000);
     dispatch(setTimerOn(true));
     dispatch(timerTick());
@@ -116,16 +119,20 @@ export const startTimer = () => (dispatch, getState) => {
 };
 
 export const stopTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (timerOn) {
+  const { timerOn,
+    spymaster,
+  } = getState();
+  if (timerOn && !spymaster) {
     clearInterval(timer);
     dispatch(setTimerOn(false));
   }
 };
 
 export const clearTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (timerOn) {
+  const { timerOn,
+    spymaster,
+  } = getState();
+  if (timerOn && !spymaster) {
     dispatch(stopTimer());
     const { timerMaxSeconds } = getState();
     dispatch(setTimerSeconds(timerMaxSeconds));
