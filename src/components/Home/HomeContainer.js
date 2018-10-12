@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { 
 	setRoomKey,
 	homeStartGame,
+  newGame,
  } from '../../actions';
 
 const mapStateToProps = state => { 
@@ -16,6 +17,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onRoomKeyChange: (e) => dispatch(setRoomKey(e.target.value)),
   onStartGame: () => dispatch(homeStartGame()),
+  newGame: () => dispatch(newGame()),
 });
 
 export default connect(

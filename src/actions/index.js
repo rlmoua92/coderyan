@@ -3,12 +3,14 @@ import {
   createColor,
   addColorsToList,
   randomWordColorAssociation,
+  getRandomString
 } from '../common.js';
 import wordList from '../words.json';
 import uheprng from 'random-seed';
 
 export const setRoomKey = (roomKey) => ({
   type: 'SET_ROOM_KEY',
+  roomKey
 });
 
 export const setGameType = gameType => ({
@@ -206,6 +208,12 @@ export const initializeBoard = () => (dispatch, gameState) => {
   for (let i = 0; i < cards.length; i++) {
     dispatch(addCard(cards[i].value, cards[i].color, i));
   }
+};
+
+export const newGame = () => (dispatch, gameState) => {
+  dispatch(setRoomKey(getRandomString(5)));
+  dispatch(setSettings(false));
+  dispatch(setGameStarted(false));
 };
 
 export const homeStartGame = () => (dispatch, gameState) => {

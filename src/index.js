@@ -6,13 +6,9 @@ import './common.scss';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/ConfigureStore';
-import { getRandomString } from './common.js';
 import { windowResize } from './actions';
 
-const roomKey = (window.location.pathname === "/" ? getRandomString(5) : window.location.pathname.replace(/\/(.*?)\//,'').replace('/',''));
-const gameType = "cn";
-const initialState = { roomKey, gameType };
-const store = configureStore(initialState);
+const store = configureStore();
 
 window.addEventListener('resize', () => {
 	store.dispatch(windowResize(window.innerWidth, window.innerHeight));
