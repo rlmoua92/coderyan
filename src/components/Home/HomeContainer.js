@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import Home from './Home.js';
 import { connect } from 'react-redux';
 import { 
@@ -5,6 +6,30 @@ import {
 	homeStartGame,
   newGame,
  } from '../../actions';
+
+class HomeContainer extends Component {
+
+  componentDidMount(){
+    this.props.newGame();
+  }
+
+  render() {
+    const {
+      randKey,
+      gameType,
+      onRoomKeyChange,
+      onStartGame,
+    } = this.props;
+    return (
+      <Home 
+        randKey={randKey}
+        gameType={gameType}
+        onRoomKeyChange={onRoomKeyChange}
+        onStartGame={onStartGame}
+      />
+    );
+  }
+}
 
 const mapStateToProps = state => { 
   console.log(state);
@@ -23,4 +48,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(HomeContainer);
