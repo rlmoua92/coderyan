@@ -2,6 +2,7 @@ TODO:
 -Improve word storage
 	-DB?
 	-Pull from API?
+		-Need to find a good API to pull words from
 -Add networking capabilities
 	-Connect to same "ROOM" on multiple devices
 	-Allows for certain devices to connect as SPYMASTER

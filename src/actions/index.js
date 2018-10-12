@@ -190,10 +190,10 @@ export const initializeBoard = () => (dispatch, gameState) => {
 
   let words = [];
   if (gameType === "cn") {
+    /*"cn" will use the default words provided by wordList.json*/
     words = wordList.words;
   } else if (gameType === "dt") {
-
-  } else if (gameType === "ud") {
+    /*"dt" will pull words from the dictionary API*/
 
   }
 

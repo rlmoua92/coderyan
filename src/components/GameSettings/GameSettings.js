@@ -64,11 +64,8 @@ const GameSettings = (props) => {
     <div className="flex flex-column gametype-settings">
       <strong>Game Type</strong>
         <div className="flex v-align-center">
-          <label className="flex-100"><input type="radio" value="cn" checked={gameType === "cn"} onChange={onGameTypeChange} disabled={!isHome} />Default</label>
-          <label className="flex-100"><input type="radio" value="dt" checked={gameType === "dt"} onChange={onGameTypeChange} disabled={!isHome} />Extended</label>
-          <label className="flex-100"><input type="radio" value="ud" checked={gameType === "ud"} onChange={onGameTypeChange} disabled={!isHome} />Urban</label>
-          {/*<option value="mc">Marvel</option>
-          <option value="pm">Pokemon</option>*/}
+          <label><input type="radio" value="cn" checked={gameType === "cn"} onChange={onGameTypeChange} disabled={!isHome} />Default</label>
+          <label><input type="radio" value="dt" checked={gameType === "dt"} onChange={onGameTypeChange} disabled={true} />Extended</label>
         </div>
     </div>;
 
