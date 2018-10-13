@@ -13,6 +13,11 @@ export const setRoomKey = (roomKey) => ({
   roomKey
 });
 
+export const setRoomKeyInput = (roomKeyInput) => ({
+  type: 'SET_ROOM_KEY_INPUT',
+  roomKeyInput
+});
+
 export const setGameType = gameType => ({
   type: 'SET_GAME_TYPE',
   gameType
@@ -22,6 +27,12 @@ export const changeScore = (team, amount) => ({
   type: 'CHANGE_SCORE',
   team,
   amount
+});
+
+export const setScore = (team, score) => ({
+  type: 'SET_SCORE',
+  team,
+  score
 });
 
 export const togglePlayer = () => ({
@@ -187,6 +198,10 @@ export const revealCard = (cardIndex) => ({
   cardIndex
 });
 
+export const clearCards = () => ({
+  type: 'CLEAR_CARDS'
+});
+
 export const initializeBoard = () => (dispatch, gameState) => {
   const { 
     roomKey,
@@ -194,7 +209,6 @@ export const initializeBoard = () => (dispatch, gameState) => {
     gameHeight,
     gameWidth,
     winConditions,
-
   } = gameState();
 
   let words = [];
@@ -212,24 +226,29 @@ export const initializeBoard = () => (dispatch, gameState) => {
   const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
   const randomWords = randomWordPicker(gen, words, gameHeight * gameWidth);
   const cards = randomWordColorAssociation(gen, randomWords, cardColors);
+
+  dispatch(clearCards());
   for (let i = 0; i < cards.length; i++) {
     dispatch(addCard(cards[i].value, cards[i].color, i));
   }
+  newCardIndex = 0;
 };
 
-export const newGame = () => (dispatch, gameState) => {
-  dispatch(setRoomKey(getRandomString(5)));
+export const newGame = () => (dispatch) => {
+  dispatch(setRoomKeyInput(getRandomString(5)));
   dispatch(setSettings(false));
-  dispatch(setGameStarted(false));
+  dispatch(setScore('red', 0));
+  dispatch(setScore('blue', 0));
 };
 
 export const homeStartGame = () => (dispatch, gameState) => {
+  const { roomKeyInput } = gameState();
+  dispatch(setRoomKey(roomKeyInput));
   dispatch(setSettings(true));
   dispatch(setGameStarted(false));
 };
 
-export const startGame = () => (dispatch, gameState) => {
-  dispatch(initializeBoard());
+export const startGame = () => (dispatch) => {
   dispatch(setGameStarted(true));
 };
 

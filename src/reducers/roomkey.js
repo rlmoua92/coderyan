@@ -1,4 +1,4 @@
-const roomKey = (state = '', action) => {
+const roomKey = (state = window.location.pathname === '/' ? '' : window.location.pathname.replace(/(\/.*?\/)/,''), action) => {
   switch (action.type) {
     case 'SET_ROOM_KEY':
       return action.roomKey;

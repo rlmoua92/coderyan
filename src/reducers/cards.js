@@ -14,6 +14,8 @@ const cards = (state = {}, action) => {
 				}
 			});
 			return result;
+		case 'CLEAR_CARDS':
+			return {};
     default:
       return state;
 	}

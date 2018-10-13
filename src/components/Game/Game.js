@@ -13,7 +13,6 @@ const Game = (props) => {
     isPlayerRed,
     score,
     onEndTurnClick,
-    gameStarted,
     randKey,
   } = props;
 
@@ -52,9 +51,7 @@ const Game = (props) => {
   return (
     <div>
       <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} />
-      {gameStarted ? 
-        <Board /> : null
-      }
+      <Board />
     </div>
   );
 };

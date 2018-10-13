@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './Home.js';
 import { connect } from 'react-redux';
 import { 
-	setRoomKey,
+  setRoomKeyInput,
 	homeStartGame,
   newGame,
  } from '../../actions';
@@ -32,15 +32,14 @@ class HomeContainer extends Component {
 }
 
 const mapStateToProps = state => { 
-  console.log(state);
   return {
-    randKey: state.roomKey,
+    randKey: state.roomKeyInput,
     gameType: state.gameType,
   }
 };
 
 const mapDispatchToProps = dispatch => ({
-  onRoomKeyChange: (e) => dispatch(setRoomKey(e.target.value)),
+  onRoomKeyChange: (e) => dispatch(setRoomKeyInput(e.target.value)),
   onStartGame: () => dispatch(homeStartGame()),
   newGame: () => dispatch(newGame()),
 });
