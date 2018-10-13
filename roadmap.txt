@@ -1,4 +1,6 @@
 TODO:
+-Add Caching
+	-via State?
 -Improve word storage
 	-DB?
 	-Pull from API?
