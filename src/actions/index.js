@@ -202,9 +202,8 @@ export const clearCards = () => ({
   type: 'CLEAR_CARDS'
 });
 
-export const initializeBoard = () => (dispatch, gameState) => {
+export const initializeBoard = (gen) => (dispatch, gameState) => {
   const { 
-    roomKey,
     gameType,
     gameHeight,
     gameWidth,
@@ -219,8 +218,6 @@ export const initializeBoard = () => (dispatch, gameState) => {
     /*"dt" will pull words from the dictionary API*/
 
   }
-
-  const gen = uheprng.create(gameType + '-' + roomKey);
 
   const neutralCount = (gameHeight * gameWidth) - 1 - winConditions.red - winConditions.blue;
   const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
@@ -237,15 +234,40 @@ export const initializeBoard = () => (dispatch, gameState) => {
 export const newGame = () => (dispatch) => {
   dispatch(setRoomKeyInput(getRandomString(5)));
   dispatch(setSettings(false));
+};
+
+export const resetGame = (gen) => (dispatch) => {
+  dispatch(setSettings(true));
+  dispatch(setGameStarted(false));
+  dispatch(setWinner(null));
   dispatch(setScore('red', 0));
   dispatch(setScore('blue', 0));
+
+  const firstPlayer = gen(100) % 2;
+  dispatch(setPlayer(firstPlayer));
+  dispatch(setWinConditions(firstPlayer ? 9 : 8, firstPlayer ? 8 : 9));
+  dispatch(initializeBoard(gen));
 };
 
 export const homeStartGame = () => (dispatch, gameState) => {
-  const { roomKeyInput } = gameState();
+  const { 
+    roomKeyInput,
+    gameType,
+  } = gameState();
+
   dispatch(setRoomKey(roomKeyInput));
-  dispatch(setSettings(true));
-  dispatch(setGameStarted(false));
+  const gen = uheprng.create(gameType + '-' + roomKeyInput);
+  dispatch(resetGame(gen));
+};
+
+export const initializeGame = () => (dispatch, gameState) => {
+  const { 
+    gameType,
+    roomKey,
+  } = gameState();
+
+  const gen = uheprng.create(gameType + '-' + roomKey);
+  dispatch(resetGame(gen));
 };
 
 export const startGame = () => (dispatch) => {

@@ -3,8 +3,8 @@ import Game from './Game.js';
 import { withRotateMessage } from '../../common.js';
 import { connect } from 'react-redux';
 import { 
+  initializeGame,
   togglePlayer,
-  initializeBoard,
 } from '../../actions';
 
 const GameWithRotateMessage = withRotateMessage(Game);
@@ -12,7 +12,9 @@ const GameWithRotateMessage = withRotateMessage(Game);
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    props.initializeBoard();
+    if (!props.cards[0]) {
+      props.intializeGame();
+    }
   }
 
   render() {
@@ -27,6 +29,7 @@ class GameContainer extends Component {
       windowWidth,
       windowHeight,
       onEndTurnClick,
+      cards,
     } = this.props;
 
     return (
@@ -41,6 +44,7 @@ class GameContainer extends Component {
         windowWidth={windowWidth}
         windowHeight={windowHeight}
         onEndTurnClick={onEndTurnClick}
+        cards={cards}
       />
     );
   }
@@ -55,14 +59,16 @@ const mapStateToProps = (state, ownProps) => {
     gameStarted: state.gameStarted,
     useTimer: state.useTimer,
     randKey: state.roomKey,
+    gameType: state.gameType,
     windowWidth: state.windowWidth,
     windowHeight: state.windowHeight,
+    cards: state.cards,
   }
 };
 
 const mapDispatchToProps = dispatch => ({
   onEndTurnClick: () => dispatch(togglePlayer()),
-  initializeBoard: () => dispatch(initializeBoard()),
+  intializeGame: () => dispatch(initializeGame()),
 });
 
 
