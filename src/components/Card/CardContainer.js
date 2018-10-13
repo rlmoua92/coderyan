@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team)),
+  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team, ownProps.isHidden)),
 });
 
 

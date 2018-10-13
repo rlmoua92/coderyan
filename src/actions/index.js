@@ -274,27 +274,29 @@ export const startGame = () => (dispatch) => {
   dispatch(setGameStarted(true));
 };
 
-export const cardClick = (cardIndex, color) => (dispatch, getState) => {
-  const {
-    useTimer,
-    timerOn,
-    player,
-    spymaster,
-    winner,
-  } = getState();
-  if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
-    dispatch(revealCard(cardIndex));
-    const current_player = player ? 'red' : 'blue';
-    if (color === 'red' || color === 'blue') {
-      dispatch(changeScore(color, 1));
-      const { score } = getState();
-      dispatch(checkWin(color, score[color]));
-    }
-    if (color === 'black') {
-      dispatch(setWinner(player ? 'BLUE' : 'RED'));
-    }
-    if (color !== current_player.toLowerCase()) {
-      useTimer ? dispatch(clearTimer()) : dispatch(togglePlayer());
+export const cardClick = (cardIndex, color, isHidden) => (dispatch, getState) => {
+  if (isHidden) {
+    const {
+      useTimer,
+      timerOn,
+      player,
+      spymaster,
+      winner,
+    } = getState();
+    if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
+      dispatch(revealCard(cardIndex));
+      const current_player = player ? 'red' : 'blue';
+      if (color === 'red' || color === 'blue') {
+        dispatch(changeScore(color, 1));
+        const { score } = getState();
+        dispatch(checkWin(color, score[color]));
+      }
+      if (color === 'black') {
+        dispatch(setWinner(player ? 'BLUE' : 'RED'));
+      }
+      if (color !== current_player.toLowerCase()) {
+        useTimer ? dispatch(clearTimer()) : dispatch(togglePlayer());
+      }
     }
   }
 };
