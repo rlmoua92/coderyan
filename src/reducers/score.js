@@ -6,6 +6,10 @@ const score = (state = initial_score, action) => {
 			let newState = Object.assign({}, state);
 			newState[action.team] += action.amount;
 			return newState;
+		case 'SET_SCORE':
+			newState = Object.assign({}, state);
+			newState[action.team] = action.score;
+			return newState;
     default:
       return state;
 	}

@@ -1,12 +1,38 @@
-export const setRoomKey = roomKey => ({
+import {
+  randomWordPicker,
+  createColor,
+  addColorsToList,
+  randomWordColorAssociation,
+  getRandomString
+} from '../common.js';
+import wordList from '../words.json';
+import uheprng from 'random-seed';
+
+export const setRoomKey = (roomKey) => ({
   type: 'SET_ROOM_KEY',
   roomKey
+});
+
+export const setRoomKeyInput = (roomKeyInput) => ({
+  type: 'SET_ROOM_KEY_INPUT',
+  roomKeyInput
+});
+
+export const setGameType = gameType => ({
+  type: 'SET_GAME_TYPE',
+  gameType
 });
 
 export const changeScore = (team, amount) => ({
   type: 'CHANGE_SCORE',
   team,
   amount
+});
+
+export const setScore = (team, score) => ({
+  type: 'SET_SCORE',
+  team,
+  score
 });
 
 export const togglePlayer = () => ({
@@ -47,6 +73,11 @@ export const setWidth = width => ({
   width
 });
 
+export const setSettings = settings => ({
+  type: 'SET_SETTINGS',
+  settings
+});
+
 export const toggleSettings = () => (dispatch, getState) => {
   const {
     timerOn,
@@ -63,7 +94,7 @@ export const modalClick = (e) => (dispatch, getState) => {
     settings,
     gameStarted,
   } = getState();
-  if(settings && e.target.className === "modal-container" && gameStarted) {
+  if(settings && e.target.className === "modal-container" && (gameStarted || window.location.pathname === "/")) {
     dispatch(toggleSettings());
   }
 };
@@ -87,8 +118,11 @@ export const timerTick = () => (dispatch, getState) => {
 };
 
 export const startTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (!timerOn) {
+  const { 
+    timerOn,
+    spymaster,
+  } = getState();
+  if (!timerOn && !spymaster) {
     timer = setInterval(() => dispatch(timerTick()), 1000);
     dispatch(setTimerOn(true));
     dispatch(timerTick());
@@ -96,16 +130,20 @@ export const startTimer = () => (dispatch, getState) => {
 };
 
 export const stopTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (timerOn) {
+  const { timerOn,
+    spymaster,
+  } = getState();
+  if (timerOn && !spymaster) {
     clearInterval(timer);
     dispatch(setTimerOn(false));
   }
 };
 
 export const clearTimer = () => (dispatch, getState) => {
-  const { timerOn } = getState();
-  if (timerOn) {
+  const { timerOn,
+    spymaster,
+  } = getState();
+  if (timerOn && !spymaster) {
     dispatch(stopTimer());
     const { timerMaxSeconds } = getState();
     dispatch(setTimerSeconds(timerMaxSeconds));
@@ -147,32 +185,118 @@ export const windowResize = (windowWidth, windowHeight) => (dispatch) => {
   dispatch(setWindowHeight(windowHeight));
 };
 
-export const addRevealedCards = (cardIndex) => ({
-  type: 'ADD_REVEALED_CARDS', 
+let newCardIndex = 0;
+export const addCard = (value, team) => ({
+  type: 'ADD_CARD',
+  value,
+  team,
+  cardIndex: newCardIndex++,
+});
+
+export const revealCard = (cardIndex) => ({
+  type: 'REVEAL_CARD', 
   cardIndex
 });
 
-export const cardClick = (cardIndex, color) => (dispatch, getState) => {
-  const {
-    useTimer,
-    timerOn,
-    player,
-    spymaster,
-    winner,
-  } = getState();
-  if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
-    dispatch(addRevealedCards(cardIndex));
-    const current_player = player ? 'red' : 'blue';
-    if (color === 'red' || color === 'blue') {
-      dispatch(changeScore(color, 1));
-      const { score } = getState();
-      dispatch(checkWin(color, score[color]));
-    }
-    if (color === 'black') {
-      dispatch(setWinner(player ? 'BLUE' : 'RED'));
-    }
-    if (color !== current_player.toLowerCase()) {
-      useTimer ? dispatch(clearTimer()) : dispatch(togglePlayer());
+export const clearCards = () => ({
+  type: 'CLEAR_CARDS'
+});
+
+export const initializeBoard = (gen) => (dispatch, gameState) => {
+  const { 
+    gameType,
+    gameHeight,
+    gameWidth,
+    winConditions,
+  } = gameState();
+
+  let words = [];
+  if (gameType === "cn") {
+    /*"cn" will use the default words provided by wordList.json*/
+    words = wordList.words;
+  } else if (gameType === "dt") {
+    /*"dt" will pull words from the dictionary API*/
+
+  }
+
+  const neutralCount = (gameHeight * gameWidth) - 1 - winConditions.red - winConditions.blue;
+  const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
+  const randomWords = randomWordPicker(gen, words, gameHeight * gameWidth);
+  const cards = randomWordColorAssociation(gen, randomWords, cardColors);
+
+  dispatch(clearCards());
+  for (let i = 0; i < cards.length; i++) {
+    dispatch(addCard(cards[i].value, cards[i].color, i));
+  }
+  newCardIndex = 0;
+};
+
+export const newGame = () => (dispatch) => {
+  dispatch(setRoomKeyInput(getRandomString(5)));
+  dispatch(setSettings(false));
+};
+
+export const resetGame = (gen) => (dispatch) => {
+  dispatch(setSettings(true));
+  dispatch(setGameStarted(false));
+  dispatch(setWinner(null));
+  dispatch(setScore('red', 0));
+  dispatch(setScore('blue', 0));
+
+  const firstPlayer = gen(100) % 2;
+  dispatch(setPlayer(firstPlayer));
+  dispatch(setWinConditions(firstPlayer ? 9 : 8, firstPlayer ? 8 : 9));
+  dispatch(initializeBoard(gen));
+};
+
+export const homeStartGame = () => (dispatch, gameState) => {
+  const { 
+    roomKeyInput,
+    gameType,
+  } = gameState();
+
+  dispatch(setRoomKey(roomKeyInput));
+  const gen = uheprng.create(gameType + '-' + roomKeyInput);
+  dispatch(resetGame(gen));
+};
+
+export const initializeGame = () => (dispatch, gameState) => {
+  const { 
+    gameType,
+    roomKey,
+  } = gameState();
+
+  const gen = uheprng.create(gameType + '-' + roomKey);
+  dispatch(resetGame(gen));
+};
+
+export const startGame = () => (dispatch) => {
+  dispatch(setGameStarted(true));
+};
+
+export const cardClick = (cardIndex, color, isHidden) => (dispatch, getState) => {
+  if (isHidden) {
+    const {
+      useTimer,
+      timerOn,
+      player,
+      spymaster,
+      winner,
+    } = getState();
+    if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
+      dispatch(revealCard(cardIndex));
+      const current_player = player ? 'red' : 'blue';
+      if (color === 'red' || color === 'blue') {
+        dispatch(changeScore(color, 1));
+        const { score } = getState();
+        dispatch(checkWin(color, score[color]));
+      }
+      if (color === 'black') {
+        dispatch(setWinner(player ? 'BLUE' : 'RED'));
+      }
+      if (color !== current_player.toLowerCase()) {
+        useTimer ? dispatch(clearTimer()) : dispatch(togglePlayer());
+      }
     }
   }
 };

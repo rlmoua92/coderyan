@@ -1,8 +1,10 @@
 import gameWidth from './gameWidth';
 import gameHeight from './gameHeight';
 import gameStarted from './gameStarted';
-import revealedCards from './revealedCards';
+import cards from './cards';
 import roomKey from './roomkey';
+import roomKeyInput from './roomKeyInput';
+import gameType from './gameType';
 import score from './score';
 import settings from './settings';
 import spymaster from './spymaster';
@@ -20,12 +22,14 @@ const rootReducer = (state = {}, action) => {
   return {
     gameWidth: gameWidth(state.gameWidth, action),
     gameHeight: gameHeight(state.gameHeight, action),
-    revealedCards: revealedCards(state.revealedCards, action, state.timerOn, state.useTimer),
+    cards: cards(state.cards, action),
     roomKey: roomKey(state.roomKey, action),
+    roomKeyInput: roomKeyInput(state.roomKeyInput, action),
+    gameType: gameType(state.gameType, action),
     score: score(state.score, action),
     settings: settings(state.settings, action),
     spymaster: spymaster(state.spymaster, action),
-    player: player(state.player, action, state.roomKey),
+    player: player(state.player, action),
     timerOn: timerOn(state.timerOn, action),
     timerMaxSeconds: timerMaxSeconds(state.timerMaxSeconds, action),
     timerSeconds: timerSeconds(state.timerSeconds, action, state.timerOn),
@@ -34,7 +38,7 @@ const rootReducer = (state = {}, action) => {
     windowHeight: windowHeight(state.windowHeight, action),
     winner: winner(state.winner, action),
     gameStarted: gameStarted(state.gameStarted, action),
-    winConditions: winConditions(state.winConditions, action, state.roomKey),
+    winConditions: winConditions(state.winConditions, action),
   };
 };
 

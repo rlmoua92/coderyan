@@ -7,12 +7,12 @@ const mapStateToProps = (state, ownProps) => {
     value: ownProps.value,
     isSpyMaster: state.spymaster,
     team: ownProps.team,
-    isHidden: !state.revealedCards.includes(ownProps.cardIndex),
+    isHidden: ownProps.isHidden,
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team)),
+  onClick: () => dispatch(cardClick(ownProps.cardIndex, ownProps.team, ownProps.isHidden)),
 });
 
 
