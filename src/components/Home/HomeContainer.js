@@ -1,38 +1,50 @@
-import React, { Component }  from 'react';
-import { getRandomString } from '../../common.js';
+import React, { Component } from 'react';
 import Home from './Home.js';
+import { connect } from 'react-redux';
+import { 
+  setRoomKeyInput,
+	homeStartGame,
+  newGame,
+ } from '../../actions';
 
 class HomeContainer extends Component {
-  constructor(props) {
-    super(props);
 
-    const roomKey = getRandomString(5);
-
-    this.state= {
-      randKey: roomKey,
-    }
-
-    this.onRoomKeyChange = this.onRoomKeyChange.bind(this);
-  }
-
-  onRoomKeyChange(e) {
-    this.setState({
-      randKey: e.target.value
-    });
+  componentDidMount(){
+    this.props.newGame();
   }
 
   render() {
     const {
-      randKey 
-    } = this.state;
-
+      randKey,
+      gameType,
+      onRoomKeyChange,
+      onStartGame,
+    } = this.props;
     return (
       <Home 
-        randKey = {randKey}
-        onRoomKeyChange= {this.onRoomKeyChange}
+        randKey={randKey}
+        gameType={gameType}
+        onRoomKeyChange={onRoomKeyChange}
+        onStartGame={onStartGame}
       />
     );
   }
 }
 
-export default HomeContainer;
+const mapStateToProps = state => { 
+  return {
+    randKey: state.roomKeyInput,
+    gameType: state.gameType,
+  }
+};
+
+const mapDispatchToProps = dispatch => ({
+  onRoomKeyChange: (e) => dispatch(setRoomKeyInput(e.target.value)),
+  onStartGame: () => dispatch(homeStartGame()),
+  newGame: () => dispatch(newGame()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeContainer);

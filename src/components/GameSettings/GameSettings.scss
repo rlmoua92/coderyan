@@ -1,0 +1,20 @@
+@import '../../common';
+
+.timer-settings {
+	margin-bottom: .25em;
+	input[type="number"] {
+		max-width: 50px;
+	}
+}
+
+.gametype-settings {
+	margin: 1em 0;
+
+	strong {
+		margin-bottom: .25em;
+	}
+
+	label {
+		margin-right: .5em;
+	}
+}

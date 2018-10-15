@@ -1,45 +1,26 @@
-import React, { Component } from 'react';
 import Modal from './Modal.js';
+import { connect } from 'react-redux';
+import { 
+  toggleSettings,
+  modalClick,
+} from '../../actions';
 
-class ModalContainer extends Component {
-  constructor(props){
-    super(props);
-
-    this.onClick = this.onClick.bind(this);
+const mapStateToProps = (state, ownProps) => { 
+  return {
+    showModal: state.settings,
+    modalContent: ownProps.modalContent,
+    buttonContent: ownProps.buttonContent,
+    enableClosing: state.gameStarted || window.location.pathname === "/",
   }
+};
 
-  componentDidMount() {
-    window.addEventListener('click', this.onClick, false);
-  }
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  toggleModal: () => dispatch(toggleSettings()),
+  onModalClick: (e) => dispatch(modalClick(e)),
+});
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.onClick, false);
-  }
 
-  onClick(e) {
-    if(this.props.showModal && e.target.className === "modal-container" && this.props.enableClosing) {
-      this.props.toggleModal();
-    }
-  }
-
-  render() {
-    const {
-      showModal,
-      modalContent,
-      buttonContent,
-      toggleModal,
-      enableClosing,
-    } = this.props;
-
-    return (
-      <Modal 
-        showModal={showModal} 
-        modalContent={modalContent}
-        buttonContent={buttonContent} 
-        toggleModal={toggleModal} 
-        enableClosing={enableClosing} />
-    );
-  }
-}
-
-export default ModalContainer;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Modal);

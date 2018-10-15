@@ -1,34 +1,13 @@
 @import '../../common';
 
-.nav-bar {
-	background-color: $nav-bg-color;
-	color: $nav-text-color;
-	padding: .25em 1em;
-	justify-content: space-between;
-}
-
-.nav-bar > div {
-	flex-basis: 30%;
-}
-
 .game-stats {
-	justify-content: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 	text-align: center;
+	width: 100%;
 }
 
-.nav-button {
-	font-size: 1.325em;
-	border-radius: .25em;
-	padding: 0 .125em;
-	margin: .425em;
-	border: 0;
-	background-color: $button-bg-color;
-}
-
-.nav-button:hover {
-	background-color: $button-hover-color;
-}
-
-.nav-button:focus {
-	outline: 0;
+.nav-settings {
+	width: 100%;
 }
