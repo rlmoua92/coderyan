@@ -17,7 +17,7 @@ const Game = (props) => {
   } = props;
 
   const leftContent = 
-    <div>
+    <div className="flex flex-column align-center">
       <div className="room">ROOM: {randKey}</div>
       {winner ? 
         <div className="winner">WINNER: {winner}</div> :
@@ -50,7 +50,7 @@ const Game = (props) => {
 
   return (
     <div>
-      <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} />
+      <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} isPlayerRed={isPlayerRed} />
       <Board />
     </div>
   );

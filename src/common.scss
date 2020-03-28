@@ -16,7 +16,7 @@ $blue-color: #2196f3;
 $neutral-color: #dce775;
 $black-color: #212121;
 /*Timer*/
-$timer-font: 'Orbitron', sans-serif;
+$timer-font: "Orbitron", sans-serif;
 $timer-color: #03a87c;
 /*Home*/
 $home-bg-color: #000;
@@ -48,7 +48,7 @@ button:hover {
   background-color: $button-bg-color;
   color: $button-text-color;
   text-decoration: none;
-  border-radius: .25em;
+  border-radius: 0.25em;
   text-align: center;
   display: inline-block;
 }
@@ -66,32 +66,43 @@ button:hover {
 .flex-column {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.align-center {
+  justify-content: center;
 }
 
 .v-align-center {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-              -ms-grid-row-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
+}
+
+.v-align-stretch {
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -ms-grid-row-align: stretch;
+  align-items: stretch;
 }
 
 .v-align-bottom {
   -webkit-box-align: end;
-      -ms-flex-align: end;
-              -ms-grid-row-align: flex-end;
-          align-items: flex-end;
+  -ms-flex-align: end;
+  -ms-grid-row-align: flex-end;
+  align-items: flex-end;
 }
 
 .flex-100 {
   -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
+  flex-basis: 100%;
 }
 
 .flex-50 {
   -ms-flex-preferred-size: 50%;
-      flex-basis: 50%;
+  flex-basis: 50%;
 }
 
 #root {
@@ -103,13 +114,13 @@ button:hover {
   background-color: $home-bg-color;
   color: $home-text-color;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 
   .rotate-content {
     text-align: center;
 
     .rotate-icon {
-      margin-top: .25em;
+      margin-top: 0.25em;
       font-size: 2em;
     }
   }
