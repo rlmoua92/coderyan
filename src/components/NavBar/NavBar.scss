@@ -1,33 +1,54 @@
-@import '../../common';
+@import "../../common";
 
 .nav-bar {
-	background-color: $nav-bg-color;
-	color: $nav-text-color;
-	padding: .25em 1em;
-	-webkit-box-pack: justify;
-	    -ms-flex-pack: justify;
-	        justify-content: space-between;
-	max-height: 75px;
+  background-color: $nav-bg-color;
+  color: $nav-text-color;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  max-height: 75px;
 }
 
-.nav-bar > div {
-	-ms-flex-preferred-size: 30%;
-	    flex-basis: 30%;
+.nav-bar-content {
+  padding: 0.25em 0;
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+}
+
+.nav-bar__left-container {
+  padding-left: 1em;
+  transition: background-color 300ms ease-in-out;
+
+  &.is-red {
+    background-color: $red-color;
+  }
+
+  &.is-blue {
+    background-color: $blue-color;
+  }
+
+  & > div {
+    height: 100%;
+  }
+}
+
+.nav-bar__right-container {
+  padding-right: 1em;
 }
 
 .nav-button {
-	font-size: 1.325em;
-	border-radius: .25em;
-	padding: 0 .125em;
-	margin: .425em;
-	border: 0;
-	background-color: $button-bg-color;
+  font-size: 1.325em;
+  border-radius: 0.25em;
+  padding: 0 0.125em;
+  margin: 0.425em;
+  border: 0;
+  background-color: $button-bg-color;
 }
 
 .nav-button:hover {
-	background-color: $button-hover-color;
+  background-color: $button-hover-color;
 }
 
 .nav-button:focus {
-	outline: 0;
+  outline: 0;
 }
