@@ -8,11 +8,11 @@
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 	max-height: 75px;
-}
 
-.nav-bar > div {
-	-ms-flex-preferred-size: 30%;
-	    flex-basis: 30%;
+	& > div {
+		-ms-flex-preferred-size: 30%;
+			flex-basis: 30%;
+	}
 }
 
 .nav-button {
@@ -22,12 +22,17 @@
 	margin: .425em;
 	border: 0;
 	background-color: $button-bg-color;
-}
+	transform: scale(1);
 
-.nav-button:hover {
-	background-color: $button-hover-color;
-}
+	&:hover {
+		background-color: $button-hover-color;
+	}
 
-.nav-button:focus {
-	outline: 0;
+	&:focus {
+		outline: 0;
+	}
+
+	&:active {
+		transform: scale(.95);
+	}
 }
