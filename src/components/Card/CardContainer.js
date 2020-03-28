@@ -5,7 +5,6 @@ import { cardClick } from '../../actions';
 const mapStateToProps = (state, ownProps) => { 
   return {
     value: ownProps.value,
-    isSpyMaster: state.spymaster,
     team: ownProps.team,
     isHidden: ownProps.isHidden,
   }

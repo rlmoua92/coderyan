@@ -1,4 +1,4 @@
-@import '../../common';
+@import "../../common";
 
 .board-row {
   display: -webkit-box;
@@ -6,34 +6,76 @@
   display: flex;
   width: 100%;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .card {
-  box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+  position: relative;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
   -ms-flex-preferred-size: 19%;
-      flex-basis: 19%;
+  flex-basis: 19%;
   text-align: center;
   padding: 1em 1em;
-  margin: .5em;
-  border-radius: .25em;
+  margin: 0.5em;
+  border-radius: 0.25em;
   box-sizing: border-box;
-  height: calc(calc(calc(100vh - 75px)/5) - 1em);
-  -webkit-box-align: strech;
-      -ms-flex-align: strech;
-              -ms-grid-row-align: strech;
-          align-items: strech;
-  font-size: .5em;
+  height: calc(calc(calc(100vh - 75px) / 5) - 1em);
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -ms-grid-row-align: stretch;
+  align-items: stretch;
+  font-size: 0.5em;
+
+  @media screen and (min-width: 768px) {
+    font-size: 0.75em;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 1em;
+  }
+
+  .board--spymaster & {
+
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-image: url("../../images/spy-silhouette.png");
+      background-size: contain;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      opacity: 0.1;
+    }
+  }
 }
 
 .card-hidden {
   background-color: $hidden-color;
-}
-.card-hidden:hover {
-  cursor: pointer;
-  opacity: .5;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  }
+
+  .board--spymaster & {
+    opacity: 1;
+
+    &:hover {
+      cursor: default;
+      opacity: 1;
+    }
+
+    &::after {
+      content: none;
+    }
+  }
 }
 
 .card-red {
@@ -49,31 +91,24 @@
   background-color: $black-color;
 }
 
-@media screen and (min-width: 768px) {
-  .card {
-    font-size: .75em;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .card {
-    font-size: 1em;
-  }
-}
-
 .cardText-container {
-  border-radius: .25em;
-  border: 1px solid rgba(0,0,0, .125);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: calc(100% - 2em);
+  height: calc(100% - 2em);
+  transform: translate(-50%, -50%);
+  border-radius: 0.25em;
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 .cardText {
   background-color: #fff;
-  padding: .125em;
+  padding: 0.125em;
   font-weight: bold;
   font-size: 1.5em;
-}
 
-@media screen and (min-width: 768px) {
-  .cardText {
+  @media screen and (min-width: 768px) {
     font-size: 1em;
   }
 }

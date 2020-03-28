@@ -8,6 +8,7 @@ class Board extends Component {
       height, 
       width, 
       cards,
+      isSpyMaster,
     } = this.props;
 
     let board = [];
@@ -23,6 +24,7 @@ class Board extends Component {
             team={card.team} 
             cardIndex={card.cardIndex}
             isHidden={card.isHidden}
+            isSpyMaster={isSpyMaster}
           />);
       }
       board.push(<div className="board-row" key={i}>{children}</div>);
@@ -31,8 +33,12 @@ class Board extends Component {
   }
 
   render() {
+    const {
+      isSpyMaster
+    } = this.props;
+
     return (
-      <div className="board">
+      <div className={`board ${ isSpyMaster ? 'board--spymaster' : '' }`}>
         {this.generateBoard()}
       </div>
     );
