@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
     height: state.gameHeight,
     width: state.gameWidth,
     cards: state.cards,
+    isSpyMaster: state.spymaster,
   }
 };
 
