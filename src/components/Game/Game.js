@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 const Game = (props) => {
   const {
+    isLoading,
     useTimer,
     winner,
     isPlayerRed,
@@ -48,11 +49,16 @@ const Game = (props) => {
       <GameSettings />
     </div>;
 
-  return (
+  const content = isLoading ? <div className="loading">Loading...</div> :
     <div>
       <NavBar leftContent={leftContent} centerContent={centerContent} rightContent={rightContent} isPlayerRed={isPlayerRed} />
       <Board />
-    </div>
+    </div>;
+    
+  return (
+    <React.Fragment>
+      { content }
+    </React.Fragment>
   );
 };
 

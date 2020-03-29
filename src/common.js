@@ -1,6 +1,10 @@
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import uheprng from 'random-seed';
 import React  from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import deafultWordList from './words.json';
 
 /*Functions to generate a random number or a random string*/
 function getRandomInt(min, max) {
@@ -85,6 +89,104 @@ const withRotateMessage = (Component) => (props) => {
   );
 }
 
+const checkIfRoomExists = async (key) => {
+  if (!key) {
+    return false;
+  }
+  const database = firebase.database();
+  const room = await database.ref(`games/${key}`).once('value');
+
+  return room.exists();
+};
+
+const setRoomData = (key, data) => {
+  if (!key) {
+    return;
+  }
+  const database = firebase.database();
+  database.ref(`games/${key}`).set(data);
+};
+
+const addCard = (value, team, cardIndex) => {
+  const result = {
+    [cardIndex]: {
+      value,
+      team,
+      cardIndex,
+      isHidden: true,
+    }
+  };
+  return result;
+};
+
+const initializeBoard = (gen, data) => {
+  const { 
+    gameType,
+    gameHeight,
+    gameWidth,
+    winConditions,
+  } = data;
+
+  let words = [];
+  if (gameType === "cn") {
+    /*"cn" will use the default words provided by wordList.json*/
+    words = deafultWordList.words;
+  } else if (gameType === "dt") {
+    /*"dt" will pull words from the dictionary API*/
+
+  }
+
+  const neutralCount = (gameHeight * gameWidth) - 1 - winConditions.red - winConditions.blue;
+  const cardColors = addColorsToList(createColor(winConditions.red,"red"),createColor(winConditions.blue,"blue"),createColor(neutralCount,"neutral"),createColor(1,"black"));
+  const randomWords = randomWordPicker(gen, words, gameHeight * gameWidth);
+  const cards = randomWordColorAssociation(gen, randomWords, cardColors);
+
+  let board = {};
+  for (let i = 0; i < cards.length; i++) {
+    board = { ...board, ...addCard(cards[i].value, cards[i].color, i) };
+  }
+
+  return board;
+};
+
+const initializeGame = (key) => {
+  const gen = uheprng.create(`cn-${key}`);
+  const firstPlayer = gen(100) % 2;
+  const options = {
+    gameType: 'cn',
+    gameStarted: false,
+    winner: null,
+    score: { 'red': 0, 'blue': 0 },
+    player: firstPlayer,
+    winConditions: firstPlayer ? { 'red': 9, 'blue': 8 } : { 'red': 8, 'blue': 9 },
+    gameHeight: 5,
+    gameWidth: 5,
+    timerOn: false,
+    timerMaxSeconds: 60,
+    timerSeconds: 60,
+    useTimer: true,
+  };
+  options.cards = initializeBoard(gen, options);
+
+  setRoomData(key, options);
+};
+
+const linkToDatabase = (key, updateStore) => {
+  if (!key) {
+    return;
+  }
+  const database = firebase.database();
+  const room = database.ref(`games/${key}`);
+
+  room.on('value', (snapshot) => {
+    if (!snapshot.val()) {
+      return;
+    }
+
+    updateStore(snapshot.val());
+  });
+};
+
 export { 
   getRandomInt, 
   getRandomString,
@@ -93,5 +195,9 @@ export {
   addColorsToList,
   randomWordColorAssociation,
   RotateMessage,
-  withRotateMessage
+  withRotateMessage,
+  checkIfRoomExists,
+  setRoomData,
+  initializeGame,
+  linkToDatabase,
 };

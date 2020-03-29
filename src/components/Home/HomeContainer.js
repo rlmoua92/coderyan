@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Home from './Home.js';
 import { connect } from 'react-redux';
+import Home from './Home.js';
 import { 
   setRoomKeyInput,
 	homeStartGame,
@@ -20,6 +20,7 @@ class HomeContainer extends Component {
       onRoomKeyChange,
       onStartGame,
     } = this.props;
+
     return (
       <Home 
         randKey={randKey}
