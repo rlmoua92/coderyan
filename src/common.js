@@ -107,6 +107,76 @@ const setRoomData = (key, data) => {
   database.ref(`games/${key}`).set(data);
 };
 
+const updateRoomData = (roomKey, dataKey, dataValue, callback) => {
+  if (!roomKey) {
+    return;
+  }
+  const database = firebase.database();
+  const updates = {};
+  updates[dataKey] = dataValue;
+
+  database.ref(`games/${roomKey}`).update(updates, (error) => {
+    if (error) {
+      console.log('error');
+      console.log(error);
+    } else if (callback) {
+      callback();
+    }
+  });
+};
+
+const togglePlayer = (roomKey, player) => {
+  updateRoomData(roomKey, 'player', !player);
+};
+
+let timer = null;
+
+const initializeTimer = (roomKey) => {
+  if (!timer) {
+    timer = setInterval(() => timerTick(roomKey), 1000);
+  }
+};
+
+const timerTick = (roomKey) => {
+  firebase.database().ref(`/games/${roomKey}`).once('value').then((snapshot) => {
+    if (!snapshot.val()) return;
+    const { timerSeconds, timerOn, spymaster, timerMaxSeconds, player } = snapshot.val();
+    if (timerSeconds > 0) {
+      updateRoomData(roomKey, 'timerSeconds', timerSeconds - 1);
+    } else {
+      clearTimer(roomKey, timerOn, spymaster, timerMaxSeconds, player);
+    }
+  });
+};
+
+const startTimer = (roomKey, timerOn) => {
+  if (!timerOn && !timer) {
+    initializeTimer(roomKey);
+    updateRoomData(roomKey, 'timerOn', true, () => timerTick(roomKey));
+  }
+};
+
+const stopTimer = (roomKey, timerOn) => {
+  if (timerOn) {
+    clearInterval(timer);
+    timer = null;
+    updateRoomData(roomKey, 'timerOn', false);
+  }
+};
+
+const clearTimer = (roomKey, timerOn, spymaster, timerMaxSeconds, player) => {
+  if (timerOn) {
+    stopTimer(roomKey, timerOn, spymaster, timerMaxSeconds);
+    updateRoomData(roomKey, 'timerSeconds', timerMaxSeconds);
+    togglePlayer(roomKey, player);
+  }
+};
+
+const setMaxSeconds = (roomKey, timerMaxSeconds) => {
+  updateRoomData(roomKey, 'timerMaxSeconds', timerMaxSeconds);
+  updateRoomData(roomKey, 'timerSeconds', timerMaxSeconds);
+};
+
 const addCard = (value, team, cardIndex) => {
   const result = {
     [cardIndex]: {
@@ -117,6 +187,44 @@ const addCard = (value, team, cardIndex) => {
     }
   };
   return result;
+};
+
+const checkWin = (roomKey, score, winConditions) => {
+  if (score['red'] === winConditions['red']) {
+    updateRoomData(roomKey, `winner`, 'red');
+  } else if (score['blue'] === winConditions['blue']) {
+    updateRoomData(roomKey, `winner`, 'blue');
+  }
+};
+
+const cardClick = (roomKey, isHidden, useTimer, timerOn ,spymaster, winner, cardIndex, player, team, score, winConditions, timerMaxSeconds) => {
+  if (isHidden) {
+    if ((!useTimer || (useTimer && timerOn)) && !spymaster && !winner) {
+      updateRoomData(roomKey, `cards/${cardIndex}/isHidden`, false);
+      const current_player = player ? "red" : "blue";
+      if (team === "red" || team === "blue") {
+        const newScore = {...score};
+        newScore[team] += 1;
+        updateRoomData(roomKey, `score/${team}`, newScore[team]);
+        checkWin(roomKey, newScore, winConditions);
+      }
+      if (team === "black") {
+        const winner = player ? "BLUE" : "RED";
+        updateRoomData(roomKey, `winner`,winner);
+      }
+      if (team !== current_player.toLowerCase()) {
+        if (useTimer) {
+          if (timerOn && !spymaster) {
+            stopTimer(roomKey, timerOn, spymaster)
+            updateRoomData(roomKey, 'timerSeconds', timerMaxSeconds);
+            togglePlayer(roomKey, player);
+          }
+        } else {
+          togglePlayer(roomKey, player);
+        }
+      }
+    }
+  }
 };
 
 const initializeBoard = (gen, data) => {
@@ -182,8 +290,12 @@ const linkToDatabase = (key, updateStore) => {
     if (!snapshot.val()) {
       return;
     }
+    const data = snapshot.val();
 
-    updateStore(snapshot.val());
+    updateStore(data);
+    if (data.timerOn) {
+      initializeTimer(data.roomKey);
+    }
   });
 };
 
@@ -198,6 +310,13 @@ export {
   withRotateMessage,
   checkIfRoomExists,
   setRoomData,
+  updateRoomData,
   initializeGame,
   linkToDatabase,
+  togglePlayer,
+  startTimer,
+  stopTimer,
+  clearTimer,
+  setMaxSeconds,
+  cardClick,
 };

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Game from "./Game.js";
-import { withRotateMessage, checkIfRoomExists, initializeGame, linkToDatabase } from "../../common.js";
+import { withRotateMessage, checkIfRoomExists, initializeGame, linkToDatabase, togglePlayer } from "../../common";
 import { connect } from "react-redux";
-import { togglePlayer, setRoomLoading, setSettings, updateStore } from "../../actions";
+import { setRoomLoading, setSettings, updateStore } from "../../actions";
 
 const GameWithRotateMessage = withRotateMessage(Game);
 
@@ -40,7 +40,6 @@ class GameContainer extends Component {
       randKey,
       windowWidth,
       windowHeight,
-      onEndTurnClick,
       cards
     } = this.props;
 
@@ -56,7 +55,7 @@ class GameContainer extends Component {
         randKey={randKey}
         windowWidth={windowWidth}
         windowHeight={windowHeight}
-        onEndTurnClick={onEndTurnClick}
+        onEndTurnClick={() => { if (!isSpyMaster) togglePlayer(randKey, isPlayerRed)}}
         cards={cards}
       />
     );
@@ -81,7 +80,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEndTurnClick: () => dispatch(togglePlayer()),
   setRoomLoading: isLoading => dispatch(setRoomLoading(isLoading)),
   setSettings: (showSettings) => dispatch(setSettings(showSettings)),
   updateStore: (data) => dispatch(updateStore(data)),

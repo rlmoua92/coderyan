@@ -1,4 +1,4 @@
-import { getRandomString } from "../common.js";
+import { getRandomString, stopTimer as stopDBTimer } from "../common.js";
 
 export const setRoomKey = roomKey => ({
   type: "SET_ROOM_KEY",
@@ -81,9 +81,9 @@ export const setSettings = settings => ({
 });
 
 export const toggleSettings = () => (dispatch, getState) => {
-  const { timerOn, settings } = getState();
+  const { timerOn, settings, roomKey, timerMaxSeconds, player } = getState();
   if (!settings && timerOn) {
-    dispatch(stopTimer());
+    stopDBTimer(roomKey, timerOn, player, timerMaxSeconds, player)
   }
   dispatch({ type: "TOGGLE_SETTINGS" });
 };
@@ -153,7 +153,6 @@ export const setTimerMaxSeconds = maxSeconds => dispatch => {
   } else {
     dispatch({ type: "SET_TIMER_MAX_SECONDS", maxSeconds: 1 });
   }
-  dispatch(setTimerSeconds(maxSeconds));
 };
 
 export const setGameStarted = gameStarted => ({
@@ -263,6 +262,6 @@ export const updateStore = (data) => (dispatch, getState) => {
   dispatch(setTimerOn(timerOn));
   dispatch(setTimerMaxSeconds(timerMaxSeconds));
   dispatch(setTimerSeconds(timerSeconds));
-  dispatch(setUseTimer(useTimer));
+  dispatch(setUseTimer(false));
   dispatch(setCards(cards));
 };
