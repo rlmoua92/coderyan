@@ -14,9 +14,13 @@ class Board extends Component {
     let board = [];
     
     for (let i = 0; i < height; i++) {
-      let children = [];
+      const children = [];
       for (let j = 0; j < width; j++) {
-        let card = cards[(i * height) + j]
+        const card = cards[(i * height) + j]
+
+        if (!card) {
+          return;
+        }
         children.push(
           <Card 
             key={j} 

@@ -4,6 +4,7 @@ import gameStarted from './gameStarted';
 import cards from './cards';
 import roomKey from './roomkey';
 import roomKeyInput from './roomKeyInput';
+import roomLoading from './roomLoading';
 import gameType from './gameType';
 import score from './score';
 import settings from './settings';
@@ -25,6 +26,7 @@ const rootReducer = (state = {}, action) => {
     cards: cards(state.cards, action),
     roomKey: roomKey(state.roomKey, action),
     roomKeyInput: roomKeyInput(state.roomKeyInput, action),
+    roomLoading: roomLoading(state.roomLoading, action),
     gameType: gameType(state.gameType, action),
     score: score(state.score, action),
     settings: settings(state.settings, action),

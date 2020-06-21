@@ -1,13 +1,45 @@
+import React from "react";
 import GameSettings from './GameSettings.js';
 import { connect } from 'react-redux';
 import { 
   toggleSettings,
-  startGame,
   toggleSpymaster,
-  setTimerMaxSeconds,
-  toggleUseTimer,
   setGameType,
 } from '../../actions';
+import { updateRoomData, setMaxSeconds } from '../../common';
+
+const GameSettingsContainer = (props) => {
+  const {
+    isSpyMaster,
+    gameStarted,
+    useTimer,
+    isHome,
+    gameType,
+    toggleSettings,
+    timerMaxSeconds,
+    onSpyMasterClick,
+    onGameTypeChange,
+    roomKey,
+  } = props;
+  
+
+  return (
+    <GameSettings
+      isSpyMaster={isSpyMaster}
+      gameStarted={gameStarted}
+      useTimer={useTimer}
+      timerMaxSeconds={timerMaxSeconds}
+      isHome={isHome}
+      gameType={gameType}
+      toggleSettings={toggleSettings}
+      onSpyMasterClick={onSpyMasterClick}
+      onTimerMaxChange={(e) => setMaxSeconds(roomKey, e.target.value)}
+      onTimerCheck={() => updateRoomData(roomKey, 'useTimer', !useTimer)}
+      onGameTypeChange={onGameTypeChange}
+      startGame={() => updateRoomData(roomKey, 'gameStarted', true)}
+    />
+  );
+};
 
 const mapStateToProps = (state, ownProps) => { 
   return {
@@ -17,15 +49,13 @@ const mapStateToProps = (state, ownProps) => {
     timerMaxSeconds: state.timerMaxSeconds,
     isHome: window.location.pathname === "/",
     gameType: state.gameType,
+    roomKey: state.roomKey,
   }
 };
 
 const mapDispatchToProps = dispatch => ({
   toggleSettings: () => dispatch(toggleSettings()),
-  startGame: () => dispatch(startGame()),
   onSpyMasterClick: () => dispatch(toggleSpymaster()),
-  onTimerMaxChange: (e) => dispatch(setTimerMaxSeconds(e.target.value)),
-  onTimerCheck: () => dispatch(toggleUseTimer()),
   onGameTypeChange: (e) => dispatch(setGameType(e.target.value)),
 });
 
@@ -33,4 +63,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(GameSettings);
+)(GameSettingsContainer);
