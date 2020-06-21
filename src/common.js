@@ -93,10 +93,23 @@ const checkIfRoomExists = async (key) => {
   if (!key) {
     return false;
   }
+  let roomExists = false;
   const database = firebase.database();
-  const room = await database.ref(`games/${key}`).once('value');
+  const room = await database.ref(`games/${key}`).once('value').then((snapshot) => {
+    console.log('connected to database')
+    if (!snapshot.val()) return;
 
-  return room.exists();
+    const { timeCreated } = snapshot.val();
+    const timeNow = Date.now();
+    const timePassed = timeNow - timeCreated;
+
+    // If room is older than 24 hours, reset data
+    if ((timePassed/3600000) <= 24) {
+      roomExists = true;
+    }
+  });
+
+  return roomExists;
 };
 
 const setRoomData = (key, data) => {
@@ -273,6 +286,7 @@ const initializeGame = (key) => {
     timerMaxSeconds: 60,
     timerSeconds: 60,
     useTimer: true,
+    timeCreated: Date.now(),
   };
   options.cards = initializeBoard(gen, options);
 
