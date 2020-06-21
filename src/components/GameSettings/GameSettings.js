@@ -55,7 +55,7 @@ const GameSettings = (props) => {
     </div> : isHome ?
       null : 
       <div className="flex v-align-bottom modal-content-button-container">
-        <button className="modal-content-button flex-50" onClick={() => {startGame(); toggleSettings();}}>
+        <button className="modal-content-button flex-50" onClick={(e) => {startGame(); toggleSettings();}}>
           START GAME
         </button>
       </div>;
@@ -72,9 +72,9 @@ const GameSettings = (props) => {
   const settingsContent = 
     <div className="flex flex-column flex-100">
       <h2>SETTINGS</h2>
-      {timerSettings}
+      {/* {timerSettings} */}
       {spymasterSettings}
-      {gameTypeSettings}
+      {/* {gameTypeSettings} */}
       {settingsGameButtons}
     </div>;
   const settingsButton = <FontAwesomeIcon icon={faCog} />;

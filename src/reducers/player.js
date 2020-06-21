@@ -1,4 +1,4 @@
-const player = (state, action) => {
+const player = (state = true, action) => {
   switch (action.type) {
     case 'TOGGLE_PLAYER':
       return !state;

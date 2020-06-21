@@ -4,20 +4,12 @@ const cards = (state = {}, action) => {
 			let result = Object.assign({}, state);
 			result[action.cardIndex].isHidden = false;
 			return result;
-		case 'ADD_CARD':
-			result = Object.assign({}, state, {
-				[action.cardIndex]: {
-					value: action.value,
-					team: action.team,
-					cardIndex: action.cardIndex,
-					isHidden: true,
-				}
-			});
-			return result;
+		case 'SET_CARDS': 
+			return action.cards;
 		case 'CLEAR_CARDS':
 			return {};
     default:
-      return state;
+    	return state;
 	}
 };
 
